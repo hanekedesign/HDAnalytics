@@ -10,17 +10,17 @@ import java.util.HashMap;
 public interface AnalyticsInterface {
 
     // Add a provider
-    void setupProvider();
+    void setupProvider(String id);
 
     // Remove a provider
     void removeProvider();
 
     // Get all providers
-    ArrayList<Object> getAllProviders();
+    //ArrayList<Object> getAllProviders();
 
     // Get instance of provider
     // Must setup (add) the provider beforehand
-    Object getProviderInstance(Object provider);
+    Object getProviderInstance();
 
     // Set provider id
     void setProviderId(String id);
@@ -29,15 +29,13 @@ public interface AnalyticsInterface {
     void setProviderTracker(String name);
 
     // Get provider-specific analytics object
-    Object getProviderTracker(Object provider);
+    //Object getProviderTracker();
 
     // Send user ID with all events
     void sendUserId(String userId);
-    void sendUserId(int userId);
-    void sendUserId(long userId);
 
     // Set dispatch frequency
-    void setDispatchFrequency(int minutes);
+    void setDispatchFrequency(int seconds);
 
     // Set advertising features
     void setAdvertisingFeatures(boolean showAdvertisements);
@@ -52,7 +50,7 @@ public interface AnalyticsInterface {
     void sendScreenViewEvent(String screenName);
 
     // Send session event
-    void sendSessionEvent(String screenName);
+    void sendSessionEvent();
 
     // Send a caught exception
     void sendCaughtException(HashMap exceptionMap);
@@ -61,7 +59,7 @@ public interface AnalyticsInterface {
     void setUncaughtExceptionEvent(boolean sendUncaughtException);
 
     // Send an uncaught exception
-    void sendUncaughtException(HashMap exceptionMap);
+    //void sendUncaughtException();
 
     /* Google Analytics */
 

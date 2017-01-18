@@ -1,8 +1,7 @@
 package com.hanekedesign.analyticsandroid;
 
-import com.hanekedesign.analyticsandroid.ProviderObjects.ExceptionObject;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by nthunem on 1/18/17.
@@ -11,17 +10,17 @@ import java.util.ArrayList;
 public interface AnalyticsInterface {
 
     // Add a provider
-    void setupProvider(AnalyticsProvider provider);
+    void setupProvider();
 
     // Remove a provider
-    void removeProvider(AnalyticsProvider provider);
+    void removeProvider();
 
     // Get all providers
-    ArrayList<AnalyticsProvider> getAllProviders();
+    ArrayList<Object> getAllProviders();
 
     // Get instance of provider
     // Must setup (add) the provider beforehand
-    AnalyticsProvider getProviderInstance(AnalyticsProvider provider);
+    Object getProviderInstance(Object provider);
 
     // Set provider id
     void setProviderId(String id);
@@ -30,7 +29,7 @@ public interface AnalyticsInterface {
     void setProviderTracker(String name);
 
     // Get provider-specific analytics object
-    Object getProviderTracker(AnalyticsProvider provider);
+    Object getProviderTracker(Object provider);
 
     // Send user ID with all events
     void sendUserId(String userId);
@@ -47,8 +46,7 @@ public interface AnalyticsInterface {
     void sendEvent(String event);
 
     // Send an event with additional properties
-    // Properties are referenced from a specific analytics provider object
-    void sendEvent(Object analyticsProvider);
+    void sendEventWithProperties(String event, HashMap eventMap);
 
     // Send screen view event
     void sendScreenViewEvent(String screenName);
@@ -57,28 +55,28 @@ public interface AnalyticsInterface {
     void sendSessionEvent(String screenName);
 
     // Send a caught exception
-    void sendCaughtException(ExceptionObject exceptionObject);
+    void sendCaughtException(HashMap exceptionMap);
 
     // Set true/false to send uncaught exception
     void setUncaughtExceptionEvent(boolean sendUncaughtException);
 
     // Send an uncaught exception
-    void sendUncaughtException(ExceptionObject exceptionObject);
+    void sendUncaughtException(HashMap exceptionMap);
 
     /* Google Analytics */
 
-    // Send a non-interaction event
-    void sendEventNonInteraction(Object analyticsProvider);
-
-    // Send campaign event
-    void sendCampaignEvent(String campaignData);
-
-    // Send custom Dimension/Metric value
-    void sendCustomMetric(boolean valueBoolean, String value);
-
-    // Send social interaction event
-    void sendSocialInteractionEvent(AnalyticsProvider provider);
-
-    // Send user timing event
-    void sendUserTimingEvent(AnalyticsProvider provider);
+//    // Send a non-interaction event
+//    void sendEventNonInteraction(Object analyticsProvider);
+//
+//    // Send campaign event
+//    void sendCampaignEvent(String campaignData);
+//
+//    // Send custom Dimension/Metric value
+//    void sendCustomMetric(boolean valueBoolean, String value);
+//
+//    // Send social interaction event
+//    void sendSocialInteractionEvent(AnalyticsProvider provider);
+//
+//    // Send user timing event
+//    void sendUserTimingEvent(AnalyticsProvider provider);
 }

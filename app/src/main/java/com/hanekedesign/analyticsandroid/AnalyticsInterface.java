@@ -40,10 +40,16 @@ public interface AnalyticsInterface {
     // Set advertising features
     void setAdvertisingFeatures(boolean showAdvertisements);
 
+    // Send generic event to provider
+    void sendEvent();
+
     // Send event event to provider
     void sendEvent(String event);
 
     // Send an event with additional properties
+    void sendEventWithProperties(HashMap eventMap);
+
+    // Send an event with additional properties and event name
     void sendEventWithProperties(String event, HashMap eventMap);
 
     // Send screen view event

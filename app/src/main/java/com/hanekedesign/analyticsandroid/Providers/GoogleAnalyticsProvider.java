@@ -66,11 +66,9 @@ public class GoogleAnalyticsProvider implements AnalyticsInterface {
         return GoogleAnalyticsProvider.this;
     }
 
-    public void setProviderId(String id) {
-        providerId = id;
-    }
+    public void setProviderId(String unused) {}
 
-    public void setProviderTracker(String name) {}
+    public void setProviderTracker(String unused) {}
 
     public void sendUserId(String id) {
         tracker.set("&uid", id);
@@ -84,12 +82,22 @@ public class GoogleAnalyticsProvider implements AnalyticsInterface {
         tracker.enableAdvertisingIdCollection(showAdvertisements);
     }
 
+    public void sendEvent() {
+        sendEventWithProperties(null, null);
+    }
+
     public void sendEvent(String event) {
         sendEventWithProperties(event, null);
     }
 
+    public void sendEventWithProperties(HashMap eventMap) {
+        sendEventWithProperties(null, eventMap);
+    }
+
     public void sendEventWithProperties(String event, HashMap eventMap) {
-        if(eventMap.containsKey(EVENT_CATEGORY))
+        if(event != null)
+            category = event;
+        else if(eventMap.containsKey(EVENT_CATEGORY))
             category = eventMap.get(EVENT_CATEGORY).toString();
         if(eventMap.containsKey(EVENT_ACTION))
             action = eventMap.get(EVENT_ACTION).toString();

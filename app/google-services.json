@@ -1,12 +1,12 @@
 {
   "project_info": {
-    "project_number": "1073872953165",
-    "project_id": "default-demo-app-de913"
+    "project_number": "15840775312",
+    "project_id": "analytics-android-88eae"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1073872953165:android:73a4fb8297b2cd4f",
+        "mobilesdk_app_id": "1:15840775312:android:083d9b6ed3a89d28",
         "android_client_info": {
           "package_name": "com.hanekedesign.analyticsandroid"
         }
@@ -14,14 +14,14 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDUFMl8MWkXDOkUg0YDmoaGY-L3ZrmgZlk"
+          "current_key": "AIzaSyBXM7_axLEZ5nRtk1Ho-pzPSNeay2QFP0c"
         }
       ],
       "services": {
         "analytics_service": {
           "status": 2,
           "analytics_property": {
-            "tracking_id": "UA-90565556-2"
+            "tracking_id": "UA-90565556-1"
           }
         },
         "appinvite_service": {

@@ -19,11 +19,11 @@ import java.util.Map;
 
 public class Analytics {
 
-    private static HashMap<String, AnalyticsProvider> analyticsProviders;
+    private static HashMap<String, AnalyticsProvider> analyticsProviders = new HashMap<>();
 
     public static void addProvider(AnalyticsProvider provider) {
         analyticsProviders.put(provider.getClass().getName(), provider);
-        provider.setupProvider();
+        //provider.setupProvider();
     }
 
     public static void removeProvider(AnalyticsProvider provider) {

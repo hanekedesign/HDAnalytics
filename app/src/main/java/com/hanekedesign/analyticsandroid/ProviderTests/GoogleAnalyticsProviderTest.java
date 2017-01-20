@@ -31,13 +31,7 @@ public class GoogleAnalyticsProviderTest {
     private HashMap eventMapLabel    = new HashMap();
     private HashMap eventMapValue    = new HashMap();
 
-    private HashMap exceptionMap          = new HashMap();
-    private HashMap exceptionMapException = new HashMap();
-    private HashMap exceptionMapIsFatal   = new HashMap();
-
     private final String TAG                = "GoogleAnalytics Test";
-    private final String PROPERTY_ID        = "UA-90565556-1";
-    private final String USER_ID            = "test_id00000001";
     private final int DISPATCH_FREQUENCY    = 30;  //seconds
     private final boolean SEND_ADVERTISING  = true;
     private final String EVENT_STRING       = "test_event";
@@ -52,10 +46,8 @@ public class GoogleAnalyticsProviderTest {
     private final String EVENT_CATEGORY_VALUE       = "test_category_category";
     private final String EVENT_ACTION       = "test_action";
     private final String EVENT_LABEL        = "test_label";
-    private final String EVENT_VALUE        = "test_value";
+    private final String EVENT_VALUE        = "411111";
     private final String SCREENNAME         = "test_screenname";
-    private final String EXCEPTION_DESCRIPTION      = "test_description";
-    private final boolean EXCEPTION_IS_FATAL        = true;
     private final boolean SEND_UNCAUGHT_EXCEPTION   = true;
     private final boolean SEND_USER_ID              = true;
 
@@ -121,24 +113,21 @@ public class GoogleAnalyticsProviderTest {
         eventMapValue.put(GoogleAnalyticsProvider.EVENT_LABEL, EVENT_LABEL);
         eventMapValue.put(GoogleAnalyticsProvider.EVENT_VALUE, EVENT_VALUE);
 
-        //exceptionMap stays empty
-
-        exceptionMapException.put(GoogleAnalyticsProvider.EXCEPTION_DESCRIPTION, EXCEPTION_DESCRIPTION);
-
-        exceptionMapIsFatal.put(GoogleAnalyticsProvider.EXCEPTION_DESCRIPTION, EXCEPTION_DESCRIPTION);
-        exceptionMapIsFatal.put(GoogleAnalyticsProvider.EXCEPTION_IS_FATAL, EXCEPTION_IS_FATAL);
+        Log.e(TAG, "Objects set");
 
         //can only test one at a time
         runTests(googleAnalyticsProviderDefault);
-        runTests(googleAnalyticsProviderFrequency);
-        runTests(googleAnalyticsProviderAdvertising);
-        runTests(googleAnalyticsProviderCategory);
-        runTests(googleAnalyticsProviderAction);
-        runTests(googleAnalyticsProviderUncaught);
-        runTests(googleAnalyticsProviderUserid);
+//        runTests(googleAnalyticsProviderFrequency);
+//        runTests(googleAnalyticsProviderAdvertising);
+//        runTests(googleAnalyticsProviderCategory);
+//        runTests(googleAnalyticsProviderAction);
+//        runTests(googleAnalyticsProviderUncaught);
+//        runTests(googleAnalyticsProviderUserid);
     }
 
     public void runTests(AnalyticsProvider provider) {
+        Log.e(TAG, "Running test: " + provider.getClass().getName());
+
         Analytics.addProvider(provider);
 
         if(Analytics.getProviderInstance(provider) != provider)
@@ -146,10 +135,11 @@ public class GoogleAnalyticsProviderTest {
 
         HashMap<String, AnalyticsProvider> providerHashMap = Analytics.getAllProviders();
         for (Map.Entry<String, AnalyticsProvider> entry : providerHashMap.entrySet()) {
-            Log.d(TAG, entry.getKey());
+            Log.e(TAG, entry.getKey());
         }
 
         Analytics.sendEvent(EVENT_STRING);
+        Analytics.sendEvent(null);
 
         Analytics.sendEventWithProperties(EVENT_STRING, eventMap);
         Analytics.sendEventWithProperties(null, eventMap);
@@ -176,6 +166,8 @@ public class GoogleAnalyticsProviderTest {
         Analytics.sendCaughtException(exception, true);
 
         Analytics.removeProvider(provider);
+
+        Log.e(TAG, "Test finished: " + provider.getClass().getName());
 
         //cause uncaught exception
         //int divideByZero = 1 / 0;

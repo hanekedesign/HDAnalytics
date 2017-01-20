@@ -1,6 +1,7 @@
 package com.hanekedesign.androidanalytics.Providers;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.android.gms.analytics.ExceptionReporter;
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -15,6 +16,8 @@ import java.util.HashMap;
  */
 
 public class GoogleAnalyticsProvider implements AnalyticsProvider {
+
+    private static final String TAG = "GoogleAnalyticsProvider";
 
     public static final String EVENT_CATEGORY = "category";
     public static final String EVENT_ACTION = "action";
@@ -42,6 +45,9 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
         //required
         this.providerId = builder.providerId;
         this.context = builder.context;
+
+        setupProvider();
+
         //optional
         if(builder.defaultCategory != null)
             this.category = builder.defaultCategory;
@@ -96,30 +102,36 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
         String eventCategory = category;
         String eventAction = action;
 
-        if (eventMap.containsKey(EVENT_CATEGORY))
-            eventCategory = eventMap.get(EVENT_CATEGORY).toString();
-        if (event != null)
-            eventAction = event;
-        else if (eventMap.containsKey(EVENT_ACTION))
-            eventAction = eventMap.get(EVENT_ACTION).toString();
+        if(eventMap != null) {
+            if (eventMap.containsKey(EVENT_CATEGORY))
+                eventCategory = eventMap.get(EVENT_CATEGORY).toString();
+            if (event != null)
+                eventAction = event;
+            else if (eventMap.containsKey(EVENT_ACTION))
+                eventAction = eventMap.get(EVENT_ACTION).toString();
+        }
 
         HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
         eventBuilder.setCategory(eventCategory);
         eventBuilder.setAction(eventAction);
 
-        if (eventMap.containsKey(EVENT_LABEL)) {
-            eventBuilder.setLabel(eventMap.get(EVENT_LABEL).toString());
-        }
-        if (eventMap.containsKey(EVENT_VALUE)) {
-            eventBuilder.setValue(Integer.getInteger(eventMap.get(EVENT_VALUE).toString()));
+        if(eventMap != null) {
+            if (eventMap.containsKey(EVENT_LABEL)) {
+                eventBuilder.setLabel(eventMap.get(EVENT_LABEL).toString());
+            }
+            if (eventMap.containsKey(EVENT_VALUE)) {
+                eventBuilder.setValue(Integer.parseInt(eventMap.get(EVENT_VALUE).toString()));
+            }
         }
 
         tracker.send(eventBuilder.build());
+        Log.e(TAG, "sendEventWithProperties");
     }
 
     public void sendScreenViewEvent(String screenName) {
         tracker.setScreenName(screenName);
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        Log.e(TAG, "sendScreenViewEvent");
     }
 
     public void sendSessionEvent() {
@@ -127,6 +139,7 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
                 .setNewSession()
                 .build()
         );
+        Log.e(TAG, "sendSessionEvent");
     }
 
     public void sendCaughtException(Exception e) {
@@ -139,6 +152,7 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
                 .setFatal(isFatal)
                 .build()
         );
+        Log.e(TAG, "sendCaughtException");
     }
 
     public void setUncaughtExceptionEvent() {

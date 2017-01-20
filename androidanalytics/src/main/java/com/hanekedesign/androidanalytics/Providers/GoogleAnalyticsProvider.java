@@ -20,6 +20,8 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
     public static final String EVENT_ACTION = "action";
     public static final String EVENT_LABEL = "label";
     public static final String EVENT_VALUE = "value";
+    public static final String EXCEPTION_DESCRIPTION = "exception_description";
+    public static final String EXCEPTION_IS_FATAL = "exceptiion_is_fatal";
 
     private Tracker tracker;
 
@@ -28,8 +30,8 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
     private final Context context;
 
     //optional
-    private final String category;
-    private final String action;
+    private String category = "default";
+    private String action = "default";
     private final int seconds;
     private final boolean sendAdvertising;
     private final boolean sendUncaughtExceptions;
@@ -40,8 +42,10 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
         this.providerId = builder.providerId;
         this.context = builder.context;
         //optional
-        this.category = builder.defaultCategory;
-        this.action = builder.defaultAction;
+        if(builder.defaultCategory != null)
+            this.category = builder.defaultCategory;
+        if(builder.defaultAction != null)
+            this.action = builder.defaultAction;
 
         this.seconds = builder.dispatchFrequency;
         if(this.seconds != 0)
@@ -85,8 +89,8 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
 
 
     public void sendEventWithProperties(String event, HashMap eventMap) {
-        String eventCategory = "default";
-        String eventAction = "default";
+        String eventCategory = category;
+        String eventAction = action;
 
         if (eventMap.containsKey(EVENT_CATEGORY))
             eventCategory = eventMap.get(EVENT_CATEGORY).toString();
@@ -119,6 +123,10 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
                 .setNewSession()
                 .build()
         );
+    }
+
+    public void sendCaughtException(Exception e) {
+        sendCaughtException(e, false);
     }
 
     public void sendCaughtException(Exception e, boolean isFatal) {

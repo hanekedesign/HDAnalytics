@@ -8,8 +8,10 @@ import android.content.Context;
 
 public class GoogleAnalyticsBuilder extends ProviderBuilder {
 
+    //required
     final String providerId;
     final Context context;
+    //optional
     int dispatchFrequency = 0;
     boolean sendAdvertising = false;
     boolean sendUncaughtExceptions = false;

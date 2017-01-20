@@ -27,5 +27,8 @@ public interface AnalyticsProvider {
     void sendSessionEvent();
 
     // Send a caught exception
+    void sendCaughtException(Exception e);
+
+    // Send a caught exception
     void sendCaughtException(Exception e, boolean isFatal);
 }

@@ -26,9 +26,9 @@ public class Analytics {
         provider.setupProvider();
     }
 
-    public static void removeProvider(String providerName) {
+    public static void removeProvider(AnalyticsProvider provider) {
         for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
-            if(entry.getKey().equalsIgnoreCase(providerName)) {
+            if(entry.getKey().equalsIgnoreCase(provider.getClass().getName())) {
                 analyticsProviders.remove(entry.getKey());
                 break;
             }
@@ -39,32 +39,48 @@ public class Analytics {
         return analyticsProviders;
     }
 
-    public static AnalyticsProvider getProviderInstance(String providerName) {
+    public static AnalyticsProvider getProviderInstance(AnalyticsProvider provider) {
         for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
-            if(entry.getKey().equalsIgnoreCase(providerName)) {
+            if(entry.getKey().equalsIgnoreCase(provider.getClass().getName())) {
                 return entry.getValue();
             }
         }
         return null;
     }
 
-    public static void sendEvent(AnalyticsProvider provider, String event) {
-        provider.sendEvent(event);
+    public static void sendEvent(String event) {
+        for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
+            entry.getValue().sendEvent(event);
+        }
     }
 
-    public static void sendEventWithProperties(AnalyticsProvider provider, String event, HashMap eventMap) {
-        provider.sendEventWithProperties(event, eventMap);
+    public static void sendEventWithProperties(String event, HashMap eventMap) {
+        for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
+            entry.getValue().sendEventWithProperties(event, eventMap);
+        }
     }
 
-    public static void sendScreenViewEvent(AnalyticsProvider provider, String screenName) {
-        provider.sendScreenViewEvent(screenName);
+    public static void sendScreenViewEvent(String screenName) {
+        for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
+            entry.getValue().sendScreenViewEvent(screenName);
+        }
     }
 
-    public static void sendSessionEvent(AnalyticsProvider provider) {
-        provider.sendSessionEvent();
+    public static void sendSessionEvent() {
+        for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
+            entry.getValue().sendSessionEvent();
+        }
     }
 
-    public static void sendCaughtException(AnalyticsProvider provider, Exception e, boolean isFatal) {
-        provider.sendCaughtException(e, isFatal);
+    public static void sendCaughtException(Exception e) {
+        for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
+            entry.getValue().sendCaughtException(e);
+        }
+    }
+
+    public static void sendCaughtException(Exception e, boolean isFatal) {
+        for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
+            entry.getValue().sendCaughtException(e, isFatal);
+        }
     }
 }

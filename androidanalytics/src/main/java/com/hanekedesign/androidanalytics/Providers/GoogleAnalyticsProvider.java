@@ -36,6 +36,7 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
     private final boolean sendAdvertising;
     private final boolean sendUncaughtExceptions;
     private final boolean sendUserId;
+    private String userId;
 
     GoogleAnalyticsProvider(GoogleAnalyticsBuilder builder) {
         //required
@@ -57,11 +58,11 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
 
         this.sendUncaughtExceptions = builder.sendUncaughtExceptions;
         if(this.sendUncaughtExceptions)
-            setUncaughtExceptionEvent(this.sendUncaughtExceptions);
+            setUncaughtExceptionEvent();
 
         this.sendUserId = builder.sendUserId;
         if(this.sendUserId)
-            sendUserId(this.providerId);
+            sendUserId();
     }
 
     public void setupProvider() {
@@ -71,8 +72,11 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
         }
     }
 
-    public void sendUserId(String id) {
-        tracker.set("&uid", id);
+    public void sendUserId() {
+        String packageName = context.getPackageName();
+        int resId = context.getResources().getIdentifier("google_analytics_user_id", "string", packageName);
+        this.userId = context.getString(resId);
+        tracker.set("&uid", this.userId);
     }
 
     public void setDispatchFrequency(int seconds) {
@@ -137,7 +141,7 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
         );
     }
 
-    public void setUncaughtExceptionEvent(boolean sendUncaughtException) {
+    public void setUncaughtExceptionEvent() {
         Thread.UncaughtExceptionHandler handler = new ExceptionReporter(
                 tracker,
                 Thread.getDefaultUncaughtExceptionHandler(),
@@ -146,6 +150,4 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
 
         Thread.setDefaultUncaughtExceptionHandler(handler);
     }
-
-
 }

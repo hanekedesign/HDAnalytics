@@ -22,11 +22,10 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField "String", "DEBUG_PROPERTY_ID", "UA-90565556-1"
+
         }
         release {
             minifyEnabled false
-            buildConfigField "String", "RELEASE_PROPERTY_ID", "UA-90565556-1"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

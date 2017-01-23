@@ -13,16 +13,17 @@ import com.hanekedesign.analyticsandroid.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    String providerId;
-    Tracker tracker;
+    String googleProviderId;
+    String mixpanelToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        providerId = "UA-90565556-1";
+        googleProviderId = "UA-90565556-1";
+        mixpanelToken = "ade5113503e859183a793570b623234b";
 
-        new GoogleAnalyticsProviderTest(this, providerId);
+        new GoogleAnalyticsProviderTest(this, googleProviderId);
     }
 }

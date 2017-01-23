@@ -2,6 +2,9 @@ package com.hanekedesign.androidanalytics;
 
 import android.content.Context;
 
+import com.google.android.gms.analytics.Tracker;
+import com.hanekedesign.androidanalytics.Providers.GoogleAnalyticsBuilder;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,9 +13,6 @@ import java.util.HashMap;
  */
 
 public interface AnalyticsProvider {
-
-    // Setup a provider
-    void setupProvider();
 
     // Send event event to provider
     void sendEvent(String event);

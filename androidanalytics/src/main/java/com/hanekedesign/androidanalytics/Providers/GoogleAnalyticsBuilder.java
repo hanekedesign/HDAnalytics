@@ -15,14 +15,12 @@ public class GoogleAnalyticsBuilder extends ProviderBuilder {
     int dispatchFrequency = 0;
     boolean sendAdvertising = false;
     boolean sendUncaughtExceptions = false;
-    boolean sendUserId = false;
+    String userId = "";
     String defaultCategory;
     String defaultAction;
 
-    public GoogleAnalyticsBuilder(Context context) {
-        String packageName = context.getPackageName();
-        int resId = context.getResources().getIdentifier("google_analytics_property_id", "string", packageName);
-        this.providerId = context.getString(resId);
+    public GoogleAnalyticsBuilder(Context context, String providerId) {
+        this.providerId = providerId;
         this.context = context;
     }
 
@@ -51,8 +49,8 @@ public class GoogleAnalyticsBuilder extends ProviderBuilder {
         return this;
     }
 
-    public GoogleAnalyticsBuilder sendUserId(boolean sendUserId) {
-        this.sendUserId = sendUserId;
+    public GoogleAnalyticsBuilder sendUserId(String userId) {
+        this.userId = userId;
         return this;
     }
 

@@ -23,7 +23,6 @@ public class Analytics {
 
     public static void addProvider(AnalyticsProvider provider) {
         analyticsProviders.put(provider.getClass().getName(), provider);
-        //provider.setupProvider();
     }
 
     public static void removeProvider(AnalyticsProvider provider) {

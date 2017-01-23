@@ -27,77 +27,62 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
     public static final String EXCEPTION_IS_FATAL = "exceptiion_is_fatal";
 
     private Tracker tracker;
+    GoogleAnalytics analytics;
 
     //required
-    private final String providerId;
-    private final Context context;
+    private String providerId;
+    private Context context;
 
     //optional
-    private String category = "default";
-    private String action = "default";
-    private final int seconds;
-    private final boolean sendAdvertising;
-    private final boolean sendUncaughtExceptions;
-    private final boolean sendUserId;
-    private String userId;
+    private String category = "Default";
+    private String action = "Default";
 
     GoogleAnalyticsProvider(GoogleAnalyticsBuilder builder) {
-        //required
-        this.providerId = builder.providerId;
+//        //required
+//        providerId = "UA-90565556-1";
+        providerId = builder.providerId;
         this.context = builder.context;
 
-        setupProvider();
+        Log.e(TAG, "PROVIDER ID = " + providerId);
 
-        //optional
-        if(builder.defaultCategory != null)
-            this.category = builder.defaultCategory;
-        if(builder.defaultAction != null)
-            this.action = builder.defaultAction;
+        GoogleAnalytics analytics = GoogleAnalytics.getInstance(this.context);
+        if(builder.dispatchFrequency != 0)
+            analytics.setLocalDispatchPeriod(builder.dispatchFrequency);
 
-        this.seconds = builder.dispatchFrequency;
-        if(this.seconds != 0)
-            setDispatchFrequency(this.seconds);
-
-        this.sendAdvertising = builder.sendAdvertising;
-        if(this.sendAdvertising)
-            setAdvertisingFeatures(this.sendAdvertising);
-
-        this.sendUncaughtExceptions = builder.sendUncaughtExceptions;
-        if(this.sendUncaughtExceptions)
-            setUncaughtExceptionEvent();
-
-        this.sendUserId = builder.sendUserId;
-        if(this.sendUserId)
-            sendUserId();
-    }
-
-    public void setupProvider() {
-        if (tracker == null) {
-            GoogleAnalytics analytics = GoogleAnalytics.getInstance(context);
+        if(tracker == null) {
             tracker = analytics.newTracker(providerId);
+            tracker.enableAutoActivityTracking(true);
+
+            if(builder.defaultCategory != null)
+                this.category = builder.defaultCategory;
+
+            if(builder.defaultAction != null)
+                this.action = builder.defaultAction;
+
+            tracker.enableExceptionReporting(true);
+            if(builder.sendAdvertising)
+                tracker.enableAdvertisingIdCollection(true);
+
+            if(!builder.userId.equalsIgnoreCase(""))
+                tracker.set("&uid", builder.userId);
+
+            if(builder.sendUncaughtExceptions) {
+                Thread.UncaughtExceptionHandler handler = new ExceptionReporter(
+                        tracker,
+                        Thread.getDefaultUncaughtExceptionHandler(),
+                        context
+                );
+                Thread.setDefaultUncaughtExceptionHandler(handler);
+            }
         }
     }
 
-    public void sendUserId() {
-        String packageName = context.getPackageName();
-        int resId = context.getResources().getIdentifier("google_analytics_user_id", "string", packageName);
-        this.userId = context.getString(resId);
-        tracker.set("&uid", this.userId);
-    }
-
-    public void setDispatchFrequency(int seconds) {
-        GoogleAnalytics.getInstance(context).setLocalDispatchPeriod(seconds);
-    }
-
-    public void setAdvertisingFeatures(boolean showAdvertisements) {
-        tracker.enableAdvertisingIdCollection(showAdvertisements);
-    }
-
+    @Override
     public void sendEvent(String event) {
         sendEventWithProperties(event, null);
     }
 
-
+    @Override
     public void sendEventWithProperties(String event, HashMap eventMap) {
         String eventCategory = category;
         String eventAction = action;
@@ -128,12 +113,14 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
         Log.e(TAG, "sendEventWithProperties");
     }
 
+    @Override
     public void sendScreenViewEvent(String screenName) {
         tracker.setScreenName(screenName);
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
         Log.e(TAG, "sendScreenViewEvent");
     }
 
+    @Override
     public void sendSessionEvent() {
         tracker.send(new HitBuilders.EventBuilder()
                 .setNewSession()
@@ -142,10 +129,12 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
         Log.e(TAG, "sendSessionEvent");
     }
 
+    @Override
     public void sendCaughtException(Exception e) {
         sendCaughtException(e, false);
     }
 
+    @Override
     public void sendCaughtException(Exception e, boolean isFatal) {
         tracker.send(new HitBuilders.ExceptionBuilder()
                 .setDescription(e.getLocalizedMessage())
@@ -153,15 +142,5 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
                 .build()
         );
         Log.e(TAG, "sendCaughtException");
-    }
-
-    public void setUncaughtExceptionEvent() {
-        Thread.UncaughtExceptionHandler handler = new ExceptionReporter(
-                tracker,
-                Thread.getDefaultUncaughtExceptionHandler(),
-                context
-        );
-
-        Thread.setDefaultUncaughtExceptionHandler(handler);
     }
 }

@@ -2,6 +2,7 @@ package com.hanekedesign.analyticsandroid.ProviderTests;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.hanekedesign.androidanalytics.Analytics;
 import com.hanekedesign.androidanalytics.AnalyticsProvider;
@@ -49,38 +50,41 @@ public class GoogleAnalyticsProviderTest {
     private final String EVENT_VALUE        = "411111";
     private final String SCREENNAME         = "test_screenname";
     private final boolean SEND_UNCAUGHT_EXCEPTION   = true;
-    private final boolean SEND_USER_ID              = true;
+    private String USER_ID                          = "";
 
+    Context context;
 
-    public GoogleAnalyticsProviderTest(Context context) {
-        googleAnalyticsProviderDefault = new GoogleAnalyticsBuilder(context)
+    public GoogleAnalyticsProviderTest(Context context, String providerId) {
+        this.context = context;
+
+        googleAnalyticsProviderDefault = new GoogleAnalyticsBuilder(context, providerId)
                 .build();
 
-        googleAnalyticsProviderFrequency = new GoogleAnalyticsBuilder(context)
+        googleAnalyticsProviderFrequency = new GoogleAnalyticsBuilder(context, providerId)
                 .dispatchFrequency(DISPATCH_FREQUENCY)
                 .defaultCategory(EVENT_CATEGORY_FREQUENCY)
                 .build();
 
-        googleAnalyticsProviderAdvertising = new GoogleAnalyticsBuilder(context)
+        googleAnalyticsProviderAdvertising = new GoogleAnalyticsBuilder(context, providerId)
                 .dispatchFrequency(DISPATCH_FREQUENCY)
                 .sendAdvertising(SEND_ADVERTISING)
                 .defaultCategory(EVENT_CATEGORY_ADVERTISING)
                 .build();
 
-        googleAnalyticsProviderCategory = new GoogleAnalyticsBuilder(context)
+        googleAnalyticsProviderCategory = new GoogleAnalyticsBuilder(context, providerId)
                 .dispatchFrequency(DISPATCH_FREQUENCY)
                 .sendAdvertising(SEND_ADVERTISING)
                 .defaultCategory(EVENT_CATEGORY_CATEGORY)
                 .build();
 
-        googleAnalyticsProviderAction = new GoogleAnalyticsBuilder(context)
+        googleAnalyticsProviderAction = new GoogleAnalyticsBuilder(context, providerId)
                 .dispatchFrequency(DISPATCH_FREQUENCY)
                 .sendAdvertising(SEND_ADVERTISING)
                 .defaultCategory(EVENT_CATEGORY_ACTION)
                 .defaultAction(EVENT_ACTION)
                 .build();
 
-        googleAnalyticsProviderUncaught = new GoogleAnalyticsBuilder(context)
+        googleAnalyticsProviderUncaught = new GoogleAnalyticsBuilder(context, providerId)
                 .dispatchFrequency(DISPATCH_FREQUENCY)
                 .sendAdvertising(SEND_ADVERTISING)
                 .defaultCategory(EVENT_CATEGORY_UNCAUGHT)
@@ -88,13 +92,13 @@ public class GoogleAnalyticsProviderTest {
                 .sendUncaughtExceptions(SEND_UNCAUGHT_EXCEPTION)
                 .build();
 
-        googleAnalyticsProviderUserid = new GoogleAnalyticsBuilder(context)
+        googleAnalyticsProviderUserid = new GoogleAnalyticsBuilder(context, providerId)
                 .dispatchFrequency(DISPATCH_FREQUENCY)
                 .sendAdvertising(SEND_ADVERTISING)
                 .defaultCategory(EVENT_CATEGORY_USERID)
                 .defaultAction(EVENT_ACTION)
                 .sendUncaughtExceptions(SEND_UNCAUGHT_EXCEPTION)
-                .sendUserId(SEND_USER_ID)
+                .sendUserId(USER_ID)
                 .build();
 
         //eventMap stays empty
@@ -171,5 +175,7 @@ public class GoogleAnalyticsProviderTest {
 
         //cause uncaught exception
         //int divideByZero = 1 / 0;
+
+        Toast.makeText(context, "Tests completed", Toast.LENGTH_SHORT).show();
     }
 }

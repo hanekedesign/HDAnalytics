@@ -84,7 +84,7 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
     }
 
     @Override
-    public void sendEventWithProperties(String event, HashMap<?, ?> eventMap) {
+    public void sendEventWithProperties(String event, HashMap<String, ?> eventMap) {
         String eventCategory;
         if(event == null)
             eventCategory = category;

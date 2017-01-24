@@ -20,7 +20,7 @@ public interface AnalyticsProvider {
     void sendEvent(String event);
 
     // Send an event with additional properties and event name
-    void sendEventWithProperties(String event, HashMap<?, ?> eventMap);
+    void sendEventWithProperties(String event, HashMap<String, ?> eventMap);
 
     // Send screen view event
     void sendScreenViewEvent(String screenName);

@@ -206,7 +206,7 @@ public class MixpanelProviderTest {
         Analytics.sendEventWithProperties(null, properties3);
 
 
-        provider.updateUserProfile(newPofileMap);
+        provider.updateUserProfile(PROFILE_3, PROFILE_3_NEW);
         Analytics.sendEventWithProperties(EVENT_STRING, properties3);
 
         Analytics.sendScreenViewEvent(SCREEN_STRING);

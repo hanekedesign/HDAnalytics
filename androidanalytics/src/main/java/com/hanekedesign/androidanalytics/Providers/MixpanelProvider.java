@@ -57,14 +57,14 @@ public class MixpanelProvider implements AnalyticsProvider {
     }
 
     @Override
-    public void sendEventWithProperties(String event, HashMap<?, ?> eventMap) {
+    public void sendEventWithProperties(String event, HashMap<String, ?> eventMap) {
         JSONObject properties = new JSONObject();
         if(eventMap == null) {
             mixpanel.track(event);
         }
         else {
-            for(Map.Entry<?, ?> entry : eventMap.entrySet()) {
-                String key = entry.getKey().toString();
+            for(Map.Entry<String, ?> entry : eventMap.entrySet()) {
+                String key = entry.getKey();
                 String value = entry.getValue().toString();
 
                 try {

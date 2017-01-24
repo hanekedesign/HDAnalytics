@@ -10,11 +10,40 @@ public class FirebaseBuilder extends ProviderBuilder {
 
     //required
     Context context;
-    String providerId;
     //optional
+    String defaultEventTitle = "Default";
+    String defaultScreenNameTitle = "Screen View";
+    String defaultSessionTitle = "Session";
+    String defaultExceptionTitle = "Exception";
+    long minimumSessionDuration = 10 * 1000;
 
-    public FirebaseBuilder(Context context, String providerId) {
+    public FirebaseBuilder(Context context) {
+        this.context = context;
+    }
 
+    public FirebaseBuilder setDefaultEventTitle(String defaultEventTitle) {
+        this.defaultEventTitle = defaultEventTitle;
+        return this;
+    }
+
+    public FirebaseBuilder setDefaultExceptionTitle(String defaultExceptionTitle) {
+        this.defaultExceptionTitle = defaultExceptionTitle;
+        return this;
+    }
+
+    public FirebaseBuilder setDefaultScreenNameTitle(String defaultScreenNameTitle) {
+        this.defaultScreenNameTitle = defaultScreenNameTitle;
+        return this;
+    }
+
+    public FirebaseBuilder setDefaultSessionTitle(String defaultSessionTitle) {
+        this.defaultSessionTitle = defaultSessionTitle;
+        return this;
+    }
+
+    public FirebaseBuilder setMinimumSessionDuration(long milliseconds) {
+        this.minimumSessionDuration = milliseconds;
+        return this;
     }
 
     @Override

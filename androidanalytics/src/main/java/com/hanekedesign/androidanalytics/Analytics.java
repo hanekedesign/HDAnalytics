@@ -82,4 +82,10 @@ public class Analytics {
             entry.getValue().sendCaughtException(e, isFatal);
         }
     }
+
+    public static void updateUserProfile(String key, Object value) {
+        for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
+            entry.getValue().updateUserProfile(key, value);
+        }
+    }
 }

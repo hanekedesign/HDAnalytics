@@ -16,18 +16,27 @@ import java.util.Map;
 public class FirebaseProvider implements AnalyticsProvider {
 
     private Context context;
-    private String providerId;
 
-    private String eventName = "Default;"
+    private String eventNameTitle;
+    private String screenNameTitle;
+    private String sessionTitle;
+    private String sessionEvent = "New Session";
+    private String exceptionTitle;
+    private String fatalException = "Fatal Exception";
+
     private String userId;
 
     private FirebaseAnalytics firebaseAnalytics;
 
     FirebaseProvider(FirebaseBuilder builder) {
         this.context = builder.context;
-        this.providerId = builder.providerId;
+        this.eventNameTitle = builder.defaultEventTitle;
+        this.screenNameTitle = builder.defaultScreenNameTitle;
+        this.sessionTitle = builder.defaultSessionTitle;
+        this.exceptionTitle = builder.defaultExceptionTitle;
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this.context);
+        firebaseAnalytics.setMinimumSessionDuration(builder.minimumSessionDuration);
     }
 
     @Override
@@ -45,7 +54,7 @@ public class FirebaseProvider implements AnalyticsProvider {
     public void sendEventWithProperties(String event, HashMap<String, ?> eventMap) {
         Bundle params = new Bundle();
         if(event != null)
-            eventName = event;
+            eventNameTitle = event;
 
         if(eventMap != null) {
             for(Map.Entry<String, ?> entry : eventMap.entrySet()) {
@@ -53,7 +62,7 @@ public class FirebaseProvider implements AnalyticsProvider {
                     params.putString(entry.getKey(), ((String) entry.getValue()));
                 }
                 else if(entry.getValue() instanceof Integer) {
-                    params.putInt(entry.getKey(), ((Integer) entry.getValue());
+                    params.putInt(entry.getKey(), ((Integer) entry.getValue()));
                 }
                 else if(entry.getValue() instanceof Boolean) {
                     params.putBoolean(entry.getKey(), ((Boolean) entry.getValue()));
@@ -73,31 +82,38 @@ public class FirebaseProvider implements AnalyticsProvider {
                 else {}
             }
         }
-        firebaseAnalytics.logEvent(eventName, params);
+        firebaseAnalytics.logEvent(eventNameTitle, params);
     }
 
     @Override
     public void sendScreenViewEvent(String screenName) {
-
+        Bundle params = new Bundle();
+        params.putString(screenNameTitle, screenName);
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
     }
 
     @Override
     public void sendSessionEvent() {
-
+        Bundle params = new Bundle();
+        params.putString(sessionTitle, sessionEvent);
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
     }
 
     @Override
     public void sendCaughtException(Exception e) {
-
+        sendCaughtException(e, false);
     }
 
     @Override
     public void sendCaughtException(Exception e, boolean isFatal) {
-
+        Bundle params = new Bundle();
+        params.putString(exceptionTitle, e.getLocalizedMessage());
+        params.putBoolean(fatalException, isFatal);
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
     }
 
     @Override
     public void updateUserProfile(String key, Object value) {
-
+        firebaseAnalytics.setUserProperty(key, value.toString());
     }
 }

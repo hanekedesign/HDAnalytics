@@ -191,8 +191,6 @@ public class MixpanelProviderTest {
             Log.e(TAG, entry.getKey());
         }
 
-
-
         Analytics.sendEvent(EVENT_STRING);
         Analytics.sendEvent(null);
 
@@ -206,7 +204,7 @@ public class MixpanelProviderTest {
         Analytics.sendEventWithProperties(null, properties3);
 
 
-        provider.updateUserProfile(PROFILE_3, PROFILE_3_NEW);
+        Analytics.updateUserProfile(PROFILE_3, PROFILE_3_NEW);
         Analytics.sendEventWithProperties(EVENT_STRING, properties3);
 
         Analytics.sendScreenViewEvent(SCREEN_STRING);

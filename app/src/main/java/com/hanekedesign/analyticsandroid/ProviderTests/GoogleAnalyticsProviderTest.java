@@ -25,12 +25,19 @@ public class GoogleAnalyticsProviderTest {
     GoogleAnalyticsProvider googleAnalyticsProviderAction;
     GoogleAnalyticsProvider googleAnalyticsProviderUncaught;
     GoogleAnalyticsProvider googleAnalyticsProviderUserid;
+    GoogleAnalyticsProvider googleAnalyticsProviderProperties;
 
     private HashMap eventMap         = new HashMap();
     private HashMap eventMapCategory = new HashMap();
     private HashMap eventMapAction   = new HashMap();
     private HashMap eventMapLabel    = new HashMap();
-    private HashMap eventMapValue    = new HashMap();
+    private HashMap properties = new HashMap();
+
+    private String[] keys = {"KEY 1", "KEY 2", "KEY 3", "KEY 4"};
+    private String[] values = {"VALUE 1", "VALUE 2", "VALUE 3", "VALUE 4"};
+
+    private final int DIMENSION_ADD_CONTACT_INDEX = 1;
+    private final String DIMENSION_ADD_CONTACT_VALUE = "Account 555";
 
     private final String TAG                = "GoogleAnalytics Test";
     private final int DISPATCH_FREQUENCY    = 30;  //seconds
@@ -44,10 +51,10 @@ public class GoogleAnalyticsProviderTest {
     private final String EVENT_CATEGORY_CATEGORY    = "test_category_category";
     private final String EVENT_CATEGORY_ACTION      = "test_category_category";
     private final String EVENT_CATEGORY_LABEL       = "test_category_category";
-    private final String EVENT_CATEGORY_VALUE       = "test_category_category";
+    private final String EVENT_CATEGORY_PROPERTY    = "Sign In";
+    private final String EVENT_ACTION_PROPERTY      = "Custom Sign In Event";
     private final String EVENT_ACTION       = "test_action";
     private final String EVENT_LABEL        = "test_label";
-    private final String EVENT_VALUE        = "411111";
     private final String SCREENNAME         = "test_screenname";
     private final boolean SEND_UNCAUGHT_EXCEPTION   = true;
     private String USER_ID                          = "";
@@ -101,6 +108,11 @@ public class GoogleAnalyticsProviderTest {
                 .sendUserId(USER_ID)
                 .build();
 
+        googleAnalyticsProviderProperties = new GoogleAnalyticsBuilder(context, providerId)
+                .defaultCategory(EVENT_CATEGORY_PROPERTY)
+                .defaultAction(EVENT_ACTION_PROPERTY)
+                .build();
+
         //eventMap stays empty
 
         eventMapCategory.put(GoogleAnalyticsProvider.EVENT_CATEGORY, EVENT_CATEGORY_CATEGORY);
@@ -111,11 +123,6 @@ public class GoogleAnalyticsProviderTest {
         eventMapLabel.put(GoogleAnalyticsProvider.EVENT_CATEGORY, EVENT_CATEGORY_LABEL);
         eventMapLabel.put(GoogleAnalyticsProvider.EVENT_ACTION, EVENT_ACTION);
         eventMapLabel.put(GoogleAnalyticsProvider.EVENT_LABEL, EVENT_LABEL);
-
-        eventMapValue.put(GoogleAnalyticsProvider.EVENT_CATEGORY, EVENT_CATEGORY_VALUE);
-        eventMapValue.put(GoogleAnalyticsProvider.EVENT_ACTION, EVENT_ACTION);
-        eventMapValue.put(GoogleAnalyticsProvider.EVENT_LABEL, EVENT_LABEL);
-        eventMapValue.put(GoogleAnalyticsProvider.EVENT_VALUE, EVENT_VALUE);
 
         Log.e(TAG, "Objects set");
 
@@ -134,44 +141,80 @@ public class GoogleAnalyticsProviderTest {
 
         Analytics.addProvider(provider);
 
-        if(Analytics.getProviderInstance(provider) != provider)
-            Log.e(TAG, "Provider does not match current");
+//        for(int i = 0; i < keys.length; ++i) {
+//            for(int j = 0; j < 1; ++j) {
+//                properties.put("&" + keys[i], values[j]);
+//            }
+//            Analytics.sendEventWithProperties(null, properties);
+//            properties.clear();
+//        }
+//
+//        for(int i = 0; i < keys.length; ++i) {
+//            for(int j = 0; j < 2; ++j) {
+//                properties.put("&" + keys[i], values[j]);
+//            }
+//            Analytics.sendEventWithProperties(null, properties);
+//            properties.clear();
+//        }
+//
+//        for(int i = 0; i < keys.length; ++i) {
+//            for(int j = 0; j < 3; ++j) {
+//                properties.put("&" + keys[i], values[j]);
+//            }
+//            Analytics.sendEventWithProperties(null, properties);
+//            properties.clear();
+//        }
+//
+//        for(int i = 0; i < keys.length; ++i) {
+//            for(int j = 0; j < 4; ++j) {
+//                properties.put("&" + keys[i], values[j]);
+//            }
+//            Analytics.sendEventWithProperties(null, properties);
+//            properties.clear();
+//        }
 
-        HashMap<String, AnalyticsProvider> providerHashMap = Analytics.getAllProviders();
-        for (Map.Entry<String, AnalyticsProvider> entry : providerHashMap.entrySet()) {
-            Log.e(TAG, entry.getKey());
-        }
+        properties.put(DIMENSION_ADD_CONTACT_INDEX, DIMENSION_ADD_CONTACT_INDEX);
+        Analytics.sendEventWithProperties(null, properties);
+        properties.clear();
 
-        Analytics.sendEvent(EVENT_STRING);
-        Analytics.sendEvent(null);
-
-        Analytics.sendEventWithProperties(EVENT_STRING, eventMap);
-        Analytics.sendEventWithProperties(null, eventMap);
-        Analytics.sendEventWithProperties(EVENT_STRING, eventMapCategory);
-        Analytics.sendEventWithProperties(null, eventMapCategory);
-        Analytics.sendEventWithProperties(EVENT_STRING, eventMapAction);
-        Analytics.sendEventWithProperties(null, eventMapAction);
-        Analytics.sendEventWithProperties(EVENT_STRING, eventMapLabel);
-        Analytics.sendEventWithProperties(null, eventMapLabel);
-        Analytics.sendEventWithProperties(EVENT_STRING, eventMapValue);
-        Analytics.sendEventWithProperties(null, eventMapValue);
-
-        Analytics.sendScreenViewEvent(SCREENNAME);
-
-        Analytics.sendSessionEvent();
-
-        Exception exception = new Exception();
-        try {
-            int divideByZero = 1 / 0;
-        } catch (Exception e) {
-            exception = e;
-        }
-        Analytics.sendCaughtException(exception);
-        Analytics.sendCaughtException(exception, true);
-
-        Analytics.removeProvider(provider);
-
-        Log.e(TAG, "Test finished: " + provider.getClass().getName());
+//        if(Analytics.getProviderInstance(provider) != provider)
+//            Log.e(TAG, "Provider does not match current");
+//
+//        HashMap<String, AnalyticsProvider> providerHashMap = Analytics.getAllProviders();
+//        for (Map.Entry<String, AnalyticsProvider> entry : providerHashMap.entrySet()) {
+//            Log.e(TAG, entry.getKey());
+//        }
+//
+//        Analytics.sendEvent(EVENT_STRING);
+//        Analytics.sendEvent(null);
+//
+//        Analytics.sendEventWithProperties(EVENT_STRING, eventMap);
+//        Analytics.sendEventWithProperties(null, eventMap);
+//        Analytics.sendEventWithProperties(EVENT_STRING, eventMapCategory);
+//        Analytics.sendEventWithProperties(null, eventMapCategory);
+//        Analytics.sendEventWithProperties(EVENT_STRING, eventMapAction);
+//        Analytics.sendEventWithProperties(null, eventMapAction);
+//        Analytics.sendEventWithProperties(EVENT_STRING, eventMapLabel);
+//        Analytics.sendEventWithProperties(null, eventMapLabel);
+//        Analytics.sendEventWithProperties(EVENT_STRING, eventMapValue);
+//        Analytics.sendEventWithProperties(null, eventMapValue);
+//
+//        Analytics.sendScreenViewEvent(SCREENNAME);
+//
+//        Analytics.sendSessionEvent();
+//
+//        Exception exception = new Exception();
+//        try {
+//            int divideByZero = 1 / 0;
+//        } catch (Exception e) {
+//            exception = e;
+//        }
+//        Analytics.sendCaughtException(exception);
+//        Analytics.sendCaughtException(exception, true);
+//
+//        Analytics.removeProvider(provider);
+//
+//        Log.e(TAG, "Test finished: " + provider.getClass().getName());
 
         //cause uncaught exception
         //int divideByZero = 1 / 0;

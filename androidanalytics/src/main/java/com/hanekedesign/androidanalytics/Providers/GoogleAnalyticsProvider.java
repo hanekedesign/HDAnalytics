@@ -10,6 +10,7 @@ import com.google.android.gms.analytics.Tracker;
 import com.hanekedesign.androidanalytics.AnalyticsProvider;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by nthunem on 1/19/17.
@@ -22,7 +23,6 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
     public static final String EVENT_CATEGORY = "category";
     public static final String EVENT_ACTION = "action";
     public static final String EVENT_LABEL = "label";
-    public static final String EVENT_VALUE = "value";
     public static final String EXCEPTION_DESCRIPTION = "exception_description";
     public static final String EXCEPTION_IS_FATAL = "exceptiion_is_fatal";
 
@@ -83,8 +83,13 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
     }
 
     @Override
-    public void sendEventWithProperties(String event, HashMap eventMap) {
-        String eventCategory = category;
+    public void sendEventWithProperties(String event, HashMap<?, ?> eventMap) {
+        String eventCategory;
+        if(event == null)
+            eventCategory = category;
+        else
+            eventCategory = event;
+
         String eventAction = action;
 
         if(eventMap != null) {
@@ -101,13 +106,27 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
         eventBuilder.setAction(eventAction);
 
         if(eventMap != null) {
+            //add label
             if (eventMap.containsKey(EVENT_LABEL)) {
                 eventBuilder.setLabel(eventMap.get(EVENT_LABEL).toString());
             }
-            if (eventMap.containsKey(EVENT_VALUE)) {
-                eventBuilder.setValue(Integer.parseInt(eventMap.get(EVENT_VALUE).toString()));
+            //add other key/value pairs
+            for(Map.Entry<?, ?> entry : eventMap.entrySet()) {
+                if(!entry.getKey().toString().equalsIgnoreCase(EVENT_CATEGORY) &&
+                        !entry.getKey().toString().equalsIgnoreCase(EVENT_ACTION) &&
+                        !entry.getKey().toString().equalsIgnoreCase(EVENT_LABEL)) {
+                    //send custom dimension
+                    if(entry.getKey() instanceof Integer) {
+                        tracker.send(eventBuilder
+                                .setCustomDimension(Integer.parseInt((entry.getKey()).toString()), entry.getValue().toString())
+                                .build());
+                    }
+                    //eventBuilder.set(entry.getKey().toString(), entry.getValue().toString());
+                }
             }
         }
+
+
 
         tracker.send(eventBuilder.build());
         Log.e(TAG, "sendEventWithProperties");

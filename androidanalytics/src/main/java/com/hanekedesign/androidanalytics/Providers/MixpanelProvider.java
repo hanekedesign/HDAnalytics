@@ -23,6 +23,7 @@ public class MixpanelProvider implements AnalyticsProvider {
 
     private String token;
     private Context context;
+    private String userId;
     private boolean sendEventsImmediately = false;
     private String eventName = "Default";
     private String sessionEventName = "Session";
@@ -31,7 +32,7 @@ public class MixpanelProvider implements AnalyticsProvider {
 
     private MixpanelAPI mixpanel;
 
-    MixpanelProvider(MixpanelBuilder builder) {
+    MixpanelProvider(MixpanelBuilder builder, MixpanelAPI mixpanel) {
         this.token = builder.token;
         this.context = builder.context;
         this.sendEventsImmediately = builder.sendEventsImmediately;
@@ -39,7 +40,15 @@ public class MixpanelProvider implements AnalyticsProvider {
 
         Log.e(TAG, "TOKEN = " + token);
 
-        mixpanel = MixpanelAPI.getInstance(context, token);
+        this.mixpanel = mixpanel;
+//        mixpanel = MixpanelAPI.getInstance(context, token);
+    }
+
+    @Override
+    public void sendUserId(String userId) {
+        this.userId = userId;
+        mixpanel.identify(userId);
+        mixpanel.getPeople().identify(userId);
     }
 
     @Override
@@ -69,6 +78,8 @@ public class MixpanelProvider implements AnalyticsProvider {
         }
         if(sendEventsImmediately)
             mixpanel.flush();
+
+        Log.e(TAG, "sendEventWithProperties");
     }
 
     @Override
@@ -77,6 +88,7 @@ public class MixpanelProvider implements AnalyticsProvider {
         try {
             properties.put(screenViewEventName, screenName);
             mixpanel.track(eventName, properties);
+            Log.e(TAG, "sendScreenViewEvent");
         }
         catch (JSONException e) {
             e.printStackTrace();
@@ -89,6 +101,7 @@ public class MixpanelProvider implements AnalyticsProvider {
         try {
             properties.put(sessionEventName, new Date());
             mixpanel.track(eventName, properties);
+            Log.e(TAG, "sendSessionEvent");
         }
         catch (JSONException e) {
             e.printStackTrace();
@@ -106,10 +119,17 @@ public class MixpanelProvider implements AnalyticsProvider {
         try {
             properties.put(exceptionEventName, e.getLocalizedMessage());
             mixpanel.track(eventName, properties);
+            Log.e(TAG, "sendCaughtException");
         }
         catch (JSONException ex) {
             ex.printStackTrace();
         }
+    }
+
+    @Override
+    public void updateUserProfile(String key, Object value) {
+        mixpanel.getPeople().identify(userId);
+        mixpanel.getPeople().set(key, value);
     }
 
     public void flushMixPanel() {

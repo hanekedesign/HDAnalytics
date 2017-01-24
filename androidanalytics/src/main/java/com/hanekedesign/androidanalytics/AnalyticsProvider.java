@@ -14,6 +14,8 @@ import java.util.HashMap;
 
 public interface AnalyticsProvider {
 
+    void sendUserId(String userId);
+
     // Send event event to provider
     void sendEvent(String event);
 
@@ -31,4 +33,7 @@ public interface AnalyticsProvider {
 
     // Send a caught exception
     void sendCaughtException(Exception e, boolean isFatal);
+
+    // Updates user profile
+    void updateUserProfile(String key, Object value);
 }

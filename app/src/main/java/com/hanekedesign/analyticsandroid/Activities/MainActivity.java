@@ -22,9 +22,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         googleProviderId = "UA-90565556-1";
-        mixpanelToken = "ade5113503e859183a793570b623234b";
+        mixpanelToken = "e8f105b8ffac1e95ace3f06f649640c8";
 
-        new GoogleAnalyticsProviderTest(this, googleProviderId);
-        //new MixpanelProviderTest(this, mixpanelToken);
+        //new GoogleAnalyticsProviderTest(this, googleProviderId);
+        new MixpanelProviderTest(this, mixpanelToken);
     }
 }

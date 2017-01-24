@@ -36,6 +36,10 @@
             </intent-filter>
         </receiver>
         <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
+        <activity android:name="com.mixpanel.android.surveys.SurveyActivity" />
+        <meta-data
+            android:name="com.mixpanel.android.MPConfig.EnableDebugLogging"
+            android:value="true" />
     </application>
 
 </manifest>

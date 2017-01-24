@@ -20,6 +20,7 @@ public class MixpanelBuilder extends ProviderBuilder {
     String token;
     Context context;
     //optional
+    String userId;
     boolean sendEventsImmediately = false;
     String defaultEventName = "Default";
     String sessionEventName = "Session";
@@ -58,13 +59,6 @@ public class MixpanelBuilder extends ProviderBuilder {
         return this;
     }
 
-    public MixpanelBuilder sendUserId(String userId) {
-        mixpanel.identify(userId);
-        mixpanel.getPeople().identify(userId);
-
-        return this;
-    }
-
     public MixpanelBuilder sendEventsImmediately(boolean sendEventsImmediately) {
         this.sendEventsImmediately = sendEventsImmediately;
 
@@ -91,13 +85,12 @@ public class MixpanelBuilder extends ProviderBuilder {
 
     public MixpanelBuilder setExceptionEventName(String eventName) {
         this.exceptionEventName = eventName;
-
         return this;
     }
 
     @Override
     public MixpanelProvider build() {
-        return new MixpanelProvider(this);
+        return new MixpanelProvider(this, mixpanel);
     }
 
 }

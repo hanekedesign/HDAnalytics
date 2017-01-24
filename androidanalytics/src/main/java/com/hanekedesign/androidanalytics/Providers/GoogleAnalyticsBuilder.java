@@ -15,7 +15,6 @@ public class GoogleAnalyticsBuilder extends ProviderBuilder {
     int dispatchFrequency = 0;
     boolean sendAdvertising = false;
     boolean sendUncaughtExceptions = false;
-    String userId = "";
     String defaultCategory;
     String defaultAction;
 
@@ -46,11 +45,6 @@ public class GoogleAnalyticsBuilder extends ProviderBuilder {
 
     public GoogleAnalyticsBuilder sendUncaughtExceptions(boolean sendUncaughtExceptions) {
         this.sendUncaughtExceptions = sendUncaughtExceptions;
-        return this;
-    }
-
-    public GoogleAnalyticsBuilder sendUserId(String userId) {
-        this.userId = userId;
         return this;
     }
 

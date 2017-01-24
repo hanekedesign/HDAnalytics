@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "15840775312",
-    "project_id": "analytics-android-88eae"
+    "firebase_url": "https://analytics-android-88eae.firebaseio.com",
+    "project_id": "analytics-android-88eae",
+    "storage_bucket": "analytics-android-88eae.appspot.com"
   },
   "client": [
     {
@@ -11,7 +13,16 @@
           "package_name": "com.hanekedesign.analyticsandroid"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "15840775312-78uj72spi7aqmp36rg7k8hdqhnnc6baa.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "15840775312-fpjt770hu3nu5d8n8j1a6trib4kvtu0m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBXM7_axLEZ5nRtk1Ho-pzPSNeay2QFP0c"
@@ -29,7 +40,7 @@
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

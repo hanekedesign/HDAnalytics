@@ -8,8 +8,10 @@ import com.hanekedesign.androidanalytics.Analytics;
 import com.hanekedesign.androidanalytics.AnalyticsProvider;
 import com.hanekedesign.androidanalytics.Providers.MixpanelBuilder;
 import com.hanekedesign.androidanalytics.Providers.MixpanelProvider;
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +22,7 @@ public class MixpanelProviderTest {
 
     MixpanelProvider mixpanelProviderDefault;
     MixpanelProvider mixpanelProviderUserId;
+    MixpanelProvider mixpanelProviderProfile;
     MixpanelProvider mixpanelProviderSendImmediately;
     MixpanelProvider mixpanelProviderEventName;
     MixpanelProvider mixpanelProviderSessionName;
@@ -30,6 +33,8 @@ public class MixpanelProviderTest {
     MixpanelProvider mixpanelProviderSuper3;
 
     HashMap defaultMap          = new HashMap();
+    HashMap profileMap          = new HashMap();
+    HashMap newPofileMap        = new HashMap();
     HashMap superProperties1    = new HashMap();
     HashMap superProperties2    = new HashMap();
     HashMap superProperties3    = new HashMap();
@@ -39,6 +44,13 @@ public class MixpanelProviderTest {
 
     private final String TAG            = "Mixpanel Test";
     private final String USER_ID        = "1234321";
+    private final String PROFILE_1      = "Profile 1";
+    private final String PROFILE_1_VALUE= "Profile 1 Value";
+    private final String PROFILE_2      = "Profile 2";
+    private final String PROFILE_2_VALUE= "Profile 2 Value";
+    private final String PROFILE_3      = "Profile 3";
+    private final String PROFILE_3_VALUE= "Profile 3 Value";
+    private final String PROFILE_3_NEW  = "New Profile 3 Value";
     private final String EVENT_STRING   = "Test Event String";
     private final String SCREEN_STRING  = "Test Screen String";
     private final String SUPER_1        = "Test Super String";
@@ -60,6 +72,12 @@ public class MixpanelProviderTest {
         this.context = context;
 
         //default map stays empty
+        profileMap.put(PROFILE_1, PROFILE_1_VALUE);
+        profileMap.put(PROFILE_2, PROFILE_2_VALUE);
+        profileMap.put(PROFILE_3, PROFILE_3_VALUE);
+
+        newPofileMap.put(PROFILE_3, PROFILE_3_NEW);
+
         superProperties1.put(SUPER_1, SUPER_VALUE_1);
 
         superProperties2.put(SUPER_1, SUPER_VALUE_1);
@@ -82,29 +100,27 @@ public class MixpanelProviderTest {
                 .build();
 
         mixpanelProviderUserId = new MixpanelBuilder(context, token)
-                .sendUserId(USER_ID)
+                .build();
+
+        mixpanelProviderProfile = new MixpanelBuilder(context, token)
                 .build();
 
         mixpanelProviderSendImmediately = new MixpanelBuilder(context, token)
-                .sendUserId(USER_ID)
                 .sendEventsImmediately(true)
                 .build();
 
         mixpanelProviderEventName = new MixpanelBuilder(context, token)
-                .sendUserId(USER_ID)
                 .sendEventsImmediately(true)
                 .setDefaultEventName("Test Event Name")
                 .build();
 
         mixpanelProviderSessionName = new MixpanelBuilder(context, token)
-                .sendUserId(USER_ID)
                 .sendEventsImmediately(true)
                 .setDefaultEventName("Test Event Name")
                 .setSessionEventName("Test Session Name")
                 .build();
 
         mixpanelProviderScreenViewName = new MixpanelBuilder(context, token)
-                .sendUserId(USER_ID)
                 .sendEventsImmediately(true)
                 .setDefaultEventName("Test Event Name")
                 .setSessionEventName("Test Session Name")
@@ -112,7 +128,6 @@ public class MixpanelProviderTest {
                 .build();
 
         mixpanelProviderExceptionName = new MixpanelBuilder(context, token)
-                .sendUserId(USER_ID)
                 .sendEventsImmediately(true)
                 .setDefaultEventName("Test Event Name")
                 .setSessionEventName("Test Session Name")
@@ -121,7 +136,6 @@ public class MixpanelProviderTest {
                 .build();
 
         mixpanelProviderSuper1 = new MixpanelBuilder(context, token)
-                .sendUserId(USER_ID)
                 .sendEventsImmediately(true)
                 .setDefaultEventName("Test Event Name")
                 .setSessionEventName("Test Session Name")
@@ -129,9 +143,8 @@ public class MixpanelProviderTest {
                 .setExceptionEventName("Test Exception Name")
                 .registerSuperProperties(superProperties1)
                 .build();
-
+//
         mixpanelProviderSuper2 = new MixpanelBuilder(context, token)
-                .sendUserId(USER_ID)
                 .sendEventsImmediately(true)
                 .setDefaultEventName("Test Event Name")
                 .setSessionEventName("Test Session Name")
@@ -141,7 +154,6 @@ public class MixpanelProviderTest {
                 .build();
 
         mixpanelProviderSuper3 = new MixpanelBuilder(context, token)
-                .sendUserId(USER_ID)
                 .sendEventsImmediately(true)
                 .setDefaultEventName("Test Event Name")
                 .setSessionEventName("Test Session Name")
@@ -151,19 +163,19 @@ public class MixpanelProviderTest {
                 .build();
 
 
-
         Log.e(TAG, "Objects Set");
 
-        runTests(mixpanelProviderDefault);
-        runTests(mixpanelProviderUserId);
-        runTests(mixpanelProviderSendImmediately);
-        runTests(mixpanelProviderEventName);
-        runTests(mixpanelProviderSessionName);
-        runTests(mixpanelProviderScreenViewName);
-        runTests(mixpanelProviderExceptionName);
-        runTests(mixpanelProviderSuper1);
-        runTests(mixpanelProviderSuper2);
-        runTests(mixpanelProviderSuper3);
+//        runTests(mixpanelProviderDefault);
+//        runTests(mixpanelProviderUserId);
+        runTests(mixpanelProviderProfile);
+//        runTests(mixpanelProviderSendImmediately);
+//        runTests(mixpanelProviderEventName);
+//        runTests(mixpanelProviderSessionName);
+//        runTests(mixpanelProviderScreenViewName);
+//        runTests(mixpanelProviderExceptionName);
+//        runTests(mixpanelProviderSuper1);
+//        runTests(mixpanelProviderSuper2);
+//        runTests(mixpanelProviderSuper3);
     }
 
     public void runTests(AnalyticsProvider provider) {
@@ -179,6 +191,8 @@ public class MixpanelProviderTest {
             Log.e(TAG, entry.getKey());
         }
 
+
+
         Analytics.sendEvent(EVENT_STRING);
         Analytics.sendEvent(null);
 
@@ -190,6 +204,10 @@ public class MixpanelProviderTest {
         Analytics.sendEventWithProperties(null, properties2);
         Analytics.sendEventWithProperties(EVENT_STRING, properties3);
         Analytics.sendEventWithProperties(null, properties3);
+
+
+        provider.updateUserProfile(newPofileMap);
+        Analytics.sendEventWithProperties(EVENT_STRING, properties3);
 
         Analytics.sendScreenViewEvent(SCREEN_STRING);
 

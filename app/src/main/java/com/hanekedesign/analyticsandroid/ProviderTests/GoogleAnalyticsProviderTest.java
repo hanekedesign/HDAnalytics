@@ -57,7 +57,6 @@ public class GoogleAnalyticsProviderTest {
     private final String EVENT_LABEL        = "test_label";
     private final String SCREENNAME         = "test_screenname";
     private final boolean SEND_UNCAUGHT_EXCEPTION   = true;
-    private String USER_ID                          = "";
 
     Context context;
 
@@ -105,7 +104,6 @@ public class GoogleAnalyticsProviderTest {
                 .defaultCategory(EVENT_CATEGORY_USERID)
                 .defaultAction(EVENT_ACTION)
                 .sendUncaughtExceptions(SEND_UNCAUGHT_EXCEPTION)
-                .sendUserId(USER_ID)
                 .build();
 
         googleAnalyticsProviderProperties = new GoogleAnalyticsBuilder(context, providerId)

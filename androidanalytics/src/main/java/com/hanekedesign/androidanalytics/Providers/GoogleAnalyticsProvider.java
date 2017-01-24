@@ -63,9 +63,6 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
             if(builder.sendAdvertising)
                 tracker.enableAdvertisingIdCollection(true);
 
-            if(!builder.userId.equalsIgnoreCase(""))
-                tracker.set("&uid", builder.userId);
-
             if(builder.sendUncaughtExceptions) {
                 Thread.UncaughtExceptionHandler handler = new ExceptionReporter(
                         tracker,
@@ -75,6 +72,10 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
                 Thread.setDefaultUncaughtExceptionHandler(handler);
             }
         }
+    }
+
+    public void sendUserId(String userId) {
+        tracker.set("&uid", userId);
     }
 
     @Override
@@ -161,5 +162,10 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
                 .build()
         );
         Log.e(TAG, "sendCaughtException");
+    }
+
+    @Override
+    public void updateUserProfile(String key, Object value) {
+
     }
 }

@@ -55,7 +55,6 @@ public class GoogleAnalyticsProviderTest {
     private final String EVENT_ACTION_PROPERTY      = "Custom Sign In Event";
     private final String EVENT_ACTION       = "test_action";
     private final String EVENT_LABEL        = "test_label";
-    private final String SCREENNAME         = "test_screenname";
     private final boolean SEND_UNCAUGHT_EXCEPTION   = true;
 
     Context context;

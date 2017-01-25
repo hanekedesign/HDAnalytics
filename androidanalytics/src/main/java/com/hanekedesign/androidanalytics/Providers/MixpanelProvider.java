@@ -24,7 +24,6 @@ public class MixpanelProvider implements AnalyticsProvider {
     private String token;
     private Context context;
     private String userId;
-    private boolean sendEventsImmediately = false;
     private String eventName = "Default";
     private String sessionEventName = "Session";
     private String screenViewEventName = "Screen View";
@@ -35,13 +34,11 @@ public class MixpanelProvider implements AnalyticsProvider {
     MixpanelProvider(MixpanelBuilder builder, MixpanelAPI mixpanel) {
         this.token = builder.token;
         this.context = builder.context;
-        this.sendEventsImmediately = builder.sendEventsImmediately;
         this.eventName = builder.defaultEventName;
 
         Log.e(TAG, "TOKEN = " + token);
 
         this.mixpanel = mixpanel;
-//        mixpanel = MixpanelAPI.getInstance(context, token);
     }
 
     @Override
@@ -64,11 +61,8 @@ public class MixpanelProvider implements AnalyticsProvider {
         }
         else {
             for(Map.Entry<String, ?> entry : eventMap.entrySet()) {
-                String key = entry.getKey();
-                String value = entry.getValue().toString();
-
                 try {
-                    properties.put(key, value);
+                    properties.put(entry.getKey(), entry.getValue());
                 }
                 catch (JSONException e) {
                     e.printStackTrace();
@@ -76,8 +70,6 @@ public class MixpanelProvider implements AnalyticsProvider {
             }
             mixpanel.track(event, properties);
         }
-        if(sendEventsImmediately)
-            mixpanel.flush();
 
         Log.e(TAG, "sendEventWithProperties");
     }
@@ -130,9 +122,5 @@ public class MixpanelProvider implements AnalyticsProvider {
     public void updateUserProfile(String key, Object value) {
         mixpanel.getPeople().identify(userId);
         mixpanel.getPeople().set(key, value);
-    }
-
-    public void flushMixPanel() {
-        mixpanel.flush();
     }
 }

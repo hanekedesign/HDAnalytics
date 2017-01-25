@@ -21,26 +21,6 @@ public class FirebaseBuilder extends ProviderBuilder {
         this.context = context;
     }
 
-    public FirebaseBuilder setDefaultEventTitle(String defaultEventTitle) {
-        this.defaultEventTitle = defaultEventTitle;
-        return this;
-    }
-
-    public FirebaseBuilder setDefaultExceptionTitle(String defaultExceptionTitle) {
-        this.defaultExceptionTitle = defaultExceptionTitle;
-        return this;
-    }
-
-    public FirebaseBuilder setDefaultScreenNameTitle(String defaultScreenNameTitle) {
-        this.defaultScreenNameTitle = defaultScreenNameTitle;
-        return this;
-    }
-
-    public FirebaseBuilder setDefaultSessionTitle(String defaultSessionTitle) {
-        this.defaultSessionTitle = defaultSessionTitle;
-        return this;
-    }
-
     public FirebaseBuilder setMinimumSessionDuration(long milliseconds) {
         this.minimumSessionDuration = milliseconds;
         return this;

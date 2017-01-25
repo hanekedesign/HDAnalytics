@@ -19,10 +19,6 @@ import java.util.Map;
 public class FirebaseProviderTest {
 
     FirebaseProvider firebaseProviderDefault;
-    FirebaseProvider firebaseProviderEventName;
-    FirebaseProvider firebaseProviderScreenName;
-    FirebaseProvider firebaseProviderSessionName;
-    FirebaseProvider firebaseProviderExceptionName;
     FirebaseProvider firebaseProviderSessionTime;
 
     HashMap defaultMap      = new HashMap();
@@ -64,10 +60,6 @@ public class FirebaseProviderTest {
     private final String CHAR_VALUE     = "char_value";
     private final String CHARSEQ_KEY    = "charSeq_key";
     private final String CHARSEQ_VALUE  = "charSeq_value";
-    private final String EVENT_NAME     = "test_event_name";
-    private final String SCREEN_NAME    = "test_screen_name";
-    private final String SESSION_NAME   = "test_session_name";
-    private final String EXCEPTION_NAME = "test_exception_name";
 
     Context context;
 
@@ -95,44 +87,15 @@ public class FirebaseProviderTest {
         firebaseProviderDefault = new FirebaseBuilder(context)
                 .build();
 
-        firebaseProviderEventName = new FirebaseBuilder(context)
-                .setDefaultEventTitle(EVENT_NAME)
-                .build();
-
-        firebaseProviderScreenName = new FirebaseBuilder(context)
-                .setDefaultEventTitle(EVENT_NAME)
-                .setDefaultScreenNameTitle(SCREEN_NAME)
-                .build();
-
-        firebaseProviderSessionName = new FirebaseBuilder(context)
-                .setDefaultEventTitle(EVENT_NAME)
-                .setDefaultScreenNameTitle(SCREEN_NAME)
-                .setDefaultSessionTitle(SESSION_NAME)
-                .build();
-
-        firebaseProviderExceptionName = new FirebaseBuilder(context)
-                .setDefaultEventTitle(EVENT_NAME)
-                .setDefaultScreenNameTitle(SCREEN_NAME)
-                .setDefaultSessionTitle(SESSION_NAME)
-                .setDefaultExceptionTitle(EXCEPTION_NAME)
-                .build();
 
         firebaseProviderSessionTime = new FirebaseBuilder(context)
-                .setDefaultEventTitle(EVENT_NAME)
-                .setDefaultScreenNameTitle(SCREEN_NAME)
-                .setDefaultSessionTitle(SESSION_NAME)
-                .setDefaultExceptionTitle(EXCEPTION_NAME)
                 .setMinimumSessionDuration(SESSION_TIME)
                 .build();
 
         Log.e(TAG, "Objects Set");
 
         runTests(firebaseProviderDefault);
-//        runTests(firebaseProviderEventName);
-//        runTests(firebaseProviderScreenName);
-//        runTests(firebaseProviderSessionName);
-//        runTests(firebaseProviderExceptionName);
-//        runTests(firebaseProviderSessionTime);
+        runTests(firebaseProviderSessionTime);
     }
 
     public void runTests(AnalyticsProvider provider) {

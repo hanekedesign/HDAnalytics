@@ -24,8 +24,6 @@ public class FirebaseProvider implements AnalyticsProvider {
     private String screenNameTitle;
     private String sessionTitle;
     private String sessionEvent = "new_session";
-    private String exceptionTitle;
-    private String fatalException = "fatal_exception";
 
     private String userId;
 
@@ -36,7 +34,6 @@ public class FirebaseProvider implements AnalyticsProvider {
         this.eventNameTitle = builder.defaultEventTitle;
         this.screenNameTitle = builder.defaultScreenNameTitle;
         this.sessionTitle = builder.defaultSessionTitle;
-        this.exceptionTitle = builder.defaultExceptionTitle;
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this.context);
         firebaseAnalytics.setMinimumSessionDuration(builder.minimumSessionDuration);
@@ -113,10 +110,6 @@ public class FirebaseProvider implements AnalyticsProvider {
     @Override
     public void sendCaughtException(Exception e, boolean isFatal) {
         FirebaseCrash.report(e);
-//        Bundle params = new Bundle();
-//        params.putString(exceptionTitle, e.getLocalizedMessage());
-//        params.putBoolean(fatalException, isFatal);
-//        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
         Log.e(TAG, "sendCaughtException");
     }
 

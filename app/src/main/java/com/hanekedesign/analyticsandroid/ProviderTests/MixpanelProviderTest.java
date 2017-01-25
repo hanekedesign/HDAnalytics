@@ -21,13 +21,6 @@ import java.util.Map;
 public class MixpanelProviderTest {
 
     MixpanelProvider mixpanelProviderDefault;
-    MixpanelProvider mixpanelProviderUserId;
-    MixpanelProvider mixpanelProviderProfile;
-    MixpanelProvider mixpanelProviderSendImmediately;
-    MixpanelProvider mixpanelProviderEventName;
-    MixpanelProvider mixpanelProviderSessionName;
-    MixpanelProvider mixpanelProviderScreenViewName;
-    MixpanelProvider mixpanelProviderExceptionName;
     MixpanelProvider mixpanelProviderSuper1;
     MixpanelProvider mixpanelProviderSuper2;
     MixpanelProvider mixpanelProviderSuper3;
@@ -99,83 +92,25 @@ public class MixpanelProviderTest {
         mixpanelProviderDefault = new MixpanelBuilder(context, token)
                 .build();
 
-        mixpanelProviderUserId = new MixpanelBuilder(context, token)
-                .build();
-
-        mixpanelProviderProfile = new MixpanelBuilder(context, token)
-                .build();
-
-        mixpanelProviderSendImmediately = new MixpanelBuilder(context, token)
-                .sendEventsImmediately(true)
-                .build();
-
-        mixpanelProviderEventName = new MixpanelBuilder(context, token)
-                .sendEventsImmediately(true)
-                .setDefaultEventName("Test Event Name")
-                .build();
-
-        mixpanelProviderSessionName = new MixpanelBuilder(context, token)
-                .sendEventsImmediately(true)
-                .setDefaultEventName("Test Event Name")
-                .setSessionEventName("Test Session Name")
-                .build();
-
-        mixpanelProviderScreenViewName = new MixpanelBuilder(context, token)
-                .sendEventsImmediately(true)
-                .setDefaultEventName("Test Event Name")
-                .setSessionEventName("Test Session Name")
-                .setScreenViewEventName("Test Screen View Name")
-                .build();
-
-        mixpanelProviderExceptionName = new MixpanelBuilder(context, token)
-                .sendEventsImmediately(true)
-                .setDefaultEventName("Test Event Name")
-                .setSessionEventName("Test Session Name")
-                .setScreenViewEventName("Test Screen View Name")
-                .setExceptionEventName("Test Exception Name")
-                .build();
-
         mixpanelProviderSuper1 = new MixpanelBuilder(context, token)
-                .sendEventsImmediately(true)
-                .setDefaultEventName("Test Event Name")
-                .setSessionEventName("Test Session Name")
-                .setScreenViewEventName("Test Screen View Name")
-                .setExceptionEventName("Test Exception Name")
                 .registerSuperProperties(superProperties1)
                 .build();
 //
         mixpanelProviderSuper2 = new MixpanelBuilder(context, token)
-                .sendEventsImmediately(true)
-                .setDefaultEventName("Test Event Name")
-                .setSessionEventName("Test Session Name")
-                .setScreenViewEventName("Test Screen View Name")
-                .setExceptionEventName("Test Exception Name")
                 .registerSuperProperties(superProperties2)
                 .build();
 
         mixpanelProviderSuper3 = new MixpanelBuilder(context, token)
-                .sendEventsImmediately(true)
-                .setDefaultEventName("Test Event Name")
-                .setSessionEventName("Test Session Name")
-                .setScreenViewEventName("Test Screen View Name")
-                .setExceptionEventName("Test Exception Name")
                 .registerSuperProperties(superProperties3)
                 .build();
 
 
         Log.e(TAG, "Objects Set");
 
-//        runTests(mixpanelProviderDefault);
-//        runTests(mixpanelProviderUserId);
-        runTests(mixpanelProviderProfile);
-//        runTests(mixpanelProviderSendImmediately);
-//        runTests(mixpanelProviderEventName);
-//        runTests(mixpanelProviderSessionName);
-//        runTests(mixpanelProviderScreenViewName);
-//        runTests(mixpanelProviderExceptionName);
-//        runTests(mixpanelProviderSuper1);
-//        runTests(mixpanelProviderSuper2);
-//        runTests(mixpanelProviderSuper3);
+        runTests(mixpanelProviderDefault);
+        runTests(mixpanelProviderSuper1);
+        runTests(mixpanelProviderSuper2);
+        runTests(mixpanelProviderSuper3);
     }
 
     public void runTests(AnalyticsProvider provider) {

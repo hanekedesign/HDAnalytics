@@ -59,35 +59,6 @@ public class MixpanelBuilder extends ProviderBuilder {
         return this;
     }
 
-    public MixpanelBuilder sendEventsImmediately(boolean sendEventsImmediately) {
-        this.sendEventsImmediately = sendEventsImmediately;
-
-        return this;
-    }
-
-    public MixpanelBuilder setDefaultEventName(String eventName) {
-        this.defaultEventName = eventName;
-
-        return this;
-    }
-
-    public MixpanelBuilder setSessionEventName(String eventName) {
-        this.sessionEventName = eventName;
-
-        return this;
-    }
-
-    public MixpanelBuilder setScreenViewEventName(String eventName) {
-        this.screenViewEventName = eventName;
-
-        return this;
-    }
-
-    public MixpanelBuilder setExceptionEventName(String eventName) {
-        this.exceptionEventName = eventName;
-        return this;
-    }
-
     @Override
     public MixpanelProvider build() {
         return new MixpanelProvider(this, mixpanel);

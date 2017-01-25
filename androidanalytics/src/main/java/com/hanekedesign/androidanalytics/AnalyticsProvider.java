@@ -1,11 +1,8 @@
 package com.hanekedesign.androidanalytics;
 
-import android.content.Context;
-
 import com.google.android.gms.analytics.Tracker;
 import com.hanekedesign.androidanalytics.Providers.GoogleAnalyticsBuilder;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**

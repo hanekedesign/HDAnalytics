@@ -39,35 +39,35 @@ public class FirebaseProviderTest {
 
     private final String TAG            = "Firebase Test";
     private final long SESSION_TIME     = 1 * 1000;
-    private final String EVENT_STRING   = "Test Event String";
-    private final String SCREEN_STRING  = "Test Screen String";
+    private final String EVENT_STRING   = "test_event_string";
+    private final String SCREEN_STRING  = "test_screen_string";
     private final String USER_ID        = "test_000001";
-    private final String PROFILE_1      = "Profile 1";
-    private final String PROFILE_1_VALUE    = "Profile 1 Value";
-    private final String PROFILE_2          = "Profile 2";
-    private final String PROFILE_2_VALUE    = "Profile 2 Value";
-    private final String PROFILE_3          = "Profile 3";
-    private final String PROFILE_3_VALUE    = "Profile 3 Value";
-    private final String PROFILE_2_NEW      = "Profile 2";
-    private final String PROFILE_2_NEW_VALUE = "Profile 2 Value";
-    private final String STRING_KEY     = "String Key";
-    private final String STRING_VALUE   = "String Value";
-    private final String INT_KEY        = "Int Key";
-    private final String INT_VALUE      = "Int Value";
-    private final String BOOL_KEY       = "Bool Key";
-    private final String BOOL_VALUE     = "Bool Value";
-    private final String FLOAT_KEY      = "Float Key";
-    private final String FLOAT_VALUE    = "Float Value";
-    private final String DOUBLE_KEY     = "Double Key";
-    private final String DOUBLE_VALUE   = "Double Value";
-    private final String CHAR_KEY       = "Char Key";
-    private final String CHAR_VALUE     = "Char Value";
-    private final String CHARSEQ_KEY    = "CharSeq Key";
-    private final String CHARSEQ_VALUE  = "CharSeq Value";
-    private final String EVENT_NAME     = "Test Event Name";
-    private final String SCREEN_NAME    = "Test Screen Name";
-    private final String SESSION_NAME   = "Test Session Name";
-    private final String EXCEPTION_NAME = "Test Exception Name";
+    private final String PROFILE_1      = "profile_1";
+    private final String PROFILE_1_VALUE    = "profile_1_value";
+    private final String PROFILE_2          = "profile_2";
+    private final String PROFILE_2_VALUE    = "profile_2_value";
+    private final String PROFILE_3          = "profile_3";
+    private final String PROFILE_3_VALUE    = "profile_3_value";
+    private final String PROFILE_2_NEW      = "profile_2";
+    private final String PROFILE_2_NEW_VALUE = "profile_2_value";
+    private final String STRING_KEY     = "string_key";
+    private final String STRING_VALUE   = "string_value";
+    private final String INT_KEY        = "int_key";
+    private final String INT_VALUE      = "int_value";
+    private final String BOOL_KEY       = "bool_key";
+    private final String BOOL_VALUE     = "bool_value";
+    private final String FLOAT_KEY      = "float_key";
+    private final String FLOAT_VALUE    = "float_value";
+    private final String DOUBLE_KEY     = "double_key";
+    private final String DOUBLE_VALUE   = "double_value";
+    private final String CHAR_KEY       = "char_key";
+    private final String CHAR_VALUE     = "char_value";
+    private final String CHARSEQ_KEY    = "charSeq_key";
+    private final String CHARSEQ_VALUE  = "charSeq_value";
+    private final String EVENT_NAME     = "test_event_name";
+    private final String SCREEN_NAME    = "test_screen_name";
+    private final String SESSION_NAME   = "test_session_name";
+    private final String EXCEPTION_NAME = "test_exception_name";
 
     Context context;
 
@@ -128,11 +128,11 @@ public class FirebaseProviderTest {
         Log.e(TAG, "Objects Set");
 
         runTests(firebaseProviderDefault);
-        runTests(firebaseProviderEventName);
-        runTests(firebaseProviderScreenName);
-        runTests(firebaseProviderSessionName);
-        runTests(firebaseProviderExceptionName);
-        runTests(firebaseProviderSessionTime);
+//        runTests(firebaseProviderEventName);
+//        runTests(firebaseProviderScreenName);
+//        runTests(firebaseProviderSessionName);
+//        runTests(firebaseProviderExceptionName);
+//        runTests(firebaseProviderSessionTime);
     }
 
     public void runTests(AnalyticsProvider provider) {
@@ -147,6 +147,8 @@ public class FirebaseProviderTest {
         for (Map.Entry<String, AnalyticsProvider> entry : providerHashMap.entrySet()) {
             Log.e(TAG, entry.getKey());
         }
+
+        Analytics.sendUserId(USER_ID);
 
         Analytics.sendEvent(EVENT_STRING);
         Analytics.sendEvent(null);
@@ -174,7 +176,7 @@ public class FirebaseProviderTest {
         Analytics.sendEventWithProperties(EVENT_STRING, properties_3);
         Analytics.sendEventWithProperties(null, defaultMap);
 
-        Analytics.updateUserProfile(PROFILE_2, PROFILE_2_NEW);
+        Analytics.updateUserProfile(PROFILE_2_NEW, PROFILE_2_NEW_VALUE);
         Analytics.sendEventWithProperties(EVENT_STRING, properties_3);
 
         Analytics.sendScreenViewEvent(SCREEN_STRING);
@@ -195,7 +197,7 @@ public class FirebaseProviderTest {
         Log.e(TAG, "Test finished: " + provider.getClass().getName());
 
         //cause uncaught exception
-        //int divideByZero = 1 / 0;
+        int divideByZero = 1 / 0;
 
         Toast.makeText(context, "Tests completed", Toast.LENGTH_SHORT).show();
     }

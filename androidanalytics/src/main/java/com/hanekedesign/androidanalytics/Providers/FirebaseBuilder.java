@@ -11,10 +11,10 @@ public class FirebaseBuilder extends ProviderBuilder {
     //required
     Context context;
     //optional
-    String defaultEventTitle = "Default";
-    String defaultScreenNameTitle = "Screen View";
-    String defaultSessionTitle = "Session";
-    String defaultExceptionTitle = "Exception";
+    String defaultEventTitle = "default";
+    String defaultScreenNameTitle = "screen_view";
+    String defaultSessionTitle = "session";
+    String defaultExceptionTitle = "exception";
     long minimumSessionDuration = 10 * 1000;
 
     public FirebaseBuilder(Context context) {

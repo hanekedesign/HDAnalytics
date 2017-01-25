@@ -47,6 +47,12 @@ public class Analytics {
         return null;
     }
 
+    public static void sendUserId(String userId) {
+        for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
+            entry.getValue().sendUserId(userId);
+        }
+    }
+
     public static void sendEvent(String event) {
         for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
             entry.getValue().sendEvent(event);

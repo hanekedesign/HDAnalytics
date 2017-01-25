@@ -7,6 +7,7 @@ import com.google.android.gms.analytics.ExceptionReporter;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.hanekedesign.analyticsandroid.ProviderTests.FirebaseProviderTest;
 import com.hanekedesign.analyticsandroid.ProviderTests.GoogleAnalyticsProviderTest;
 import com.hanekedesign.analyticsandroid.ProviderTests.MixpanelProviderTest;
 import com.hanekedesign.analyticsandroid.R;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         mixpanelToken = "e8f105b8ffac1e95ace3f06f649640c8";
 
         //new GoogleAnalyticsProviderTest(this, googleProviderId);
-        new MixpanelProviderTest(this, mixpanelToken);
+        //new MixpanelProviderTest(this, mixpanelToken);
+        new FirebaseProviderTest(this);
     }
 }

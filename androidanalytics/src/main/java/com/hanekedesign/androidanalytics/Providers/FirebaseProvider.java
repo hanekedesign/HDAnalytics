@@ -2,8 +2,10 @@ package com.hanekedesign.androidanalytics.Providers;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crash.FirebaseCrash;
 import com.hanekedesign.androidanalytics.AnalyticsProvider;
 
 import java.util.HashMap;
@@ -17,12 +19,13 @@ public class FirebaseProvider implements AnalyticsProvider {
 
     private Context context;
 
+    private String TAG = "Firebase Provider";
     private String eventNameTitle;
     private String screenNameTitle;
     private String sessionTitle;
-    private String sessionEvent = "New Session";
+    private String sessionEvent = "new_session";
     private String exceptionTitle;
-    private String fatalException = "Fatal Exception";
+    private String fatalException = "fatal_exception";
 
     private String userId;
 
@@ -83,6 +86,7 @@ public class FirebaseProvider implements AnalyticsProvider {
             }
         }
         firebaseAnalytics.logEvent(eventNameTitle, params);
+        Log.e(TAG, "sendEventWithProperties");
     }
 
     @Override
@@ -90,6 +94,7 @@ public class FirebaseProvider implements AnalyticsProvider {
         Bundle params = new Bundle();
         params.putString(screenNameTitle, screenName);
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
+        Log.e(TAG, "sendScreenViewEvent");
     }
 
     @Override
@@ -97,6 +102,7 @@ public class FirebaseProvider implements AnalyticsProvider {
         Bundle params = new Bundle();
         params.putString(sessionTitle, sessionEvent);
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
+        Log.e(TAG, "sendSessionEvent");
     }
 
     @Override
@@ -106,14 +112,17 @@ public class FirebaseProvider implements AnalyticsProvider {
 
     @Override
     public void sendCaughtException(Exception e, boolean isFatal) {
-        Bundle params = new Bundle();
-        params.putString(exceptionTitle, e.getLocalizedMessage());
-        params.putBoolean(fatalException, isFatal);
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
+        FirebaseCrash.report(e);
+//        Bundle params = new Bundle();
+//        params.putString(exceptionTitle, e.getLocalizedMessage());
+//        params.putBoolean(fatalException, isFatal);
+//        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
+        Log.e(TAG, "sendCaughtException");
     }
 
     @Override
     public void updateUserProfile(String key, Object value) {
         firebaseAnalytics.setUserProperty(key, value.toString());
+        Log.e(TAG, "updateUserProfile");
     }
 }

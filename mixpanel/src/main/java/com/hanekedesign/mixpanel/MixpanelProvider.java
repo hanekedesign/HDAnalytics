@@ -13,13 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by nthunem on 1/23/17.
- */
-
 public class MixpanelProvider implements AnalyticsProvider {
-
-    private static final String TAG = "Mixpanel Provider";
 
     private String token;
     private Context context;
@@ -35,8 +29,6 @@ public class MixpanelProvider implements AnalyticsProvider {
         this.token = builder.token;
         this.context = builder.context;
         this.eventName = builder.defaultEventName;
-
-        Log.e(TAG, "TOKEN = " + token);
 
         this.mixpanel = mixpanel;
     }
@@ -70,8 +62,6 @@ public class MixpanelProvider implements AnalyticsProvider {
             }
             mixpanel.track(event, properties);
         }
-
-        Log.e(TAG, "sendEventWithProperties");
     }
 
     @Override
@@ -80,7 +70,6 @@ public class MixpanelProvider implements AnalyticsProvider {
         try {
             properties.put(screenViewEventName, screenName);
             mixpanel.track(eventName, properties);
-            Log.e(TAG, "sendScreenViewEvent");
         }
         catch (JSONException e) {
             e.printStackTrace();
@@ -93,7 +82,6 @@ public class MixpanelProvider implements AnalyticsProvider {
         try {
             properties.put(sessionEventName, new Date());
             mixpanel.track(eventName, properties);
-            Log.e(TAG, "sendSessionEvent");
         }
         catch (JSONException e) {
             e.printStackTrace();
@@ -111,7 +99,6 @@ public class MixpanelProvider implements AnalyticsProvider {
         try {
             properties.put(exceptionEventName, e.getLocalizedMessage());
             mixpanel.track(eventName, properties);
-            Log.e(TAG, "sendCaughtException");
         }
         catch (JSONException ex) {
             ex.printStackTrace();

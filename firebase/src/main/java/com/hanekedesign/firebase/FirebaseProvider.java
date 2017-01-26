@@ -11,15 +11,10 @@ import com.hanekedesign.androidanalytics.AnalyticsProvider;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by nthunem on 1/24/17.
- */
-
 public class FirebaseProvider implements AnalyticsProvider {
 
     private Context context;
 
-    private String TAG = "Firebase Provider";
     private String eventNameTitle;
     private String screenNameTitle;
     private String sessionTitle;
@@ -83,7 +78,6 @@ public class FirebaseProvider implements AnalyticsProvider {
             }
         }
         firebaseAnalytics.logEvent(eventNameTitle, params);
-        Log.e(TAG, "sendEventWithProperties");
     }
 
     @Override
@@ -91,7 +85,6 @@ public class FirebaseProvider implements AnalyticsProvider {
         Bundle params = new Bundle();
         params.putString(screenNameTitle, screenName);
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
-        Log.e(TAG, "sendScreenViewEvent");
     }
 
     @Override
@@ -99,7 +92,6 @@ public class FirebaseProvider implements AnalyticsProvider {
         Bundle params = new Bundle();
         params.putString(sessionTitle, sessionEvent);
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
-        Log.e(TAG, "sendSessionEvent");
     }
 
     @Override
@@ -110,12 +102,10 @@ public class FirebaseProvider implements AnalyticsProvider {
     @Override
     public void sendCaughtException(Exception e, boolean isFatal) {
         FirebaseCrash.report(e);
-        Log.e(TAG, "sendCaughtException");
     }
 
     @Override
     public void updateUserProfile(String key, Object value) {
         firebaseAnalytics.setUserProperty(key, value.toString());
-        Log.e(TAG, "updateUserProfile");
     }
 }

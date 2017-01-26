@@ -4,10 +4,6 @@ import android.content.Context;
 
 import com.hanekedesign.androidanalytics.ProviderBuilder;
 
-/**
- * Created by nthunem on 1/19/17.
- */
-
 public class GoogleAnalyticsBuilder implements ProviderBuilder {
 
     //required
@@ -25,26 +21,34 @@ public class GoogleAnalyticsBuilder implements ProviderBuilder {
         this.context = context;
     }
 
+    /**
+     * Sets frequency to send events
+     *
+     * @param seconds           Seconds in which to send events
+     * @return                  GoogleAnalyticsBuilder object
+     */
     public GoogleAnalyticsBuilder dispatchFrequency(int seconds) {
         this.dispatchFrequency = seconds;
         return this;
     }
 
+    /**
+     * Sets whether to track how the app was discovered (App Linking)
+     *
+     * @param sendAdvertising   True/false
+     * @return                  GoogleAnalyticsBuilder object
+     */
     public GoogleAnalyticsBuilder sendAdvertising(boolean sendAdvertising) {
         this.sendAdvertising = sendAdvertising;
         return this;
     }
 
-    public GoogleAnalyticsBuilder defaultCategory(String defaultCategory) {
-        this.defaultCategory = defaultCategory;
-        return this;
-    }
-
-    public GoogleAnalyticsBuilder defaultAction(String defaultAction) {
-        this.defaultAction = defaultAction;
-        return this;
-    }
-
+    /**
+     * Sets whether to send uncaught exceptions and app crashes to Google Analytics
+     *
+     * @param sendUncaughtExceptions    True/False
+     * @return                          GoogleAnalyticsBuilder object
+     */
     public GoogleAnalyticsBuilder sendUncaughtExceptions(boolean sendUncaughtExceptions) {
         this.sendUncaughtExceptions = sendUncaughtExceptions;
         return this;

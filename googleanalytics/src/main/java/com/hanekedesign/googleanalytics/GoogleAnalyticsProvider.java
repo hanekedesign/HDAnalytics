@@ -12,19 +12,11 @@ import com.hanekedesign.androidanalytics.AnalyticsProvider;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by nthunem on 1/19/17.
- */
-
 public class GoogleAnalyticsProvider implements AnalyticsProvider {
-
-    private static final String TAG = "GoogleAnalyticsProvider";
 
     public static final String EVENT_CATEGORY = "category";
     public static final String EVENT_ACTION = "action";
     public static final String EVENT_LABEL = "label";
-    public static final String EXCEPTION_DESCRIPTION = "exception_description";
-    public static final String EXCEPTION_IS_FATAL = "exceptiion_is_fatal";
 
     private Tracker tracker;
     GoogleAnalytics analytics;
@@ -38,12 +30,9 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
     private String action = "Default";
 
     GoogleAnalyticsProvider(GoogleAnalyticsBuilder builder) {
-//        //required
-//        providerId = "UA-90565556-1";
+        //required
         providerId = builder.providerId;
         this.context = builder.context;
-
-        Log.e(TAG, "PROVIDER ID = " + providerId);
 
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(this.context);
         if(builder.dispatchFrequency != 0)
@@ -130,14 +119,12 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
 
 
         tracker.send(eventBuilder.build());
-        Log.e(TAG, "sendEventWithProperties");
     }
 
     @Override
     public void sendScreenViewEvent(String screenName) {
         tracker.setScreenName(screenName);
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
-        Log.e(TAG, "sendScreenViewEvent");
     }
 
     @Override
@@ -146,7 +133,6 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
                 .setNewSession()
                 .build()
         );
-        Log.e(TAG, "sendSessionEvent");
     }
 
     @Override
@@ -161,7 +147,6 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
                 .setFatal(isFatal)
                 .build()
         );
-        Log.e(TAG, "sendCaughtException");
     }
 
     @Override

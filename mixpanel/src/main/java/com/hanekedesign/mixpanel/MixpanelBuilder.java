@@ -11,22 +11,13 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by nthunem on 1/23/17.
- */
-
 public class MixpanelBuilder implements ProviderBuilder {
 
     //required
     String token;
     Context context;
     //optional
-    String userId;
-    boolean sendEventsImmediately = false;
     String defaultEventName = "Default";
-    String sessionEventName = "Session";
-    String screenViewEventName = "Screen View";
-    String exceptionEventName = "Exception";
 
     MixpanelAPI mixpanel;
     JSONObject properties = new JSONObject();
@@ -37,6 +28,12 @@ public class MixpanelBuilder implements ProviderBuilder {
         mixpanel = MixpanelAPI.getInstance(context, token);
     }
 
+    /**
+     * Allow push notifications to be sent to the client
+     *
+     * @param pushToken         Google Sender ID
+     * @return                  MixpanelBuilder object
+     */
     public MixpanelBuilder initPushHandling(String pushToken) {
         mixpanel.getPeople().identify(token);
         mixpanel.getPeople().initPushHandling(pushToken);
@@ -44,6 +41,12 @@ public class MixpanelBuilder implements ProviderBuilder {
         return this;
     }
 
+    /**
+     * Registers super properties to be sent with every event
+     *
+     * @param hashMap           Hashmap of key/value pairs
+     * @return                  MixpanelBuilder object
+     */
     public MixpanelBuilder registerSuperProperties(HashMap<?, ?> hashMap) {
         for(Map.Entry<?, ?> entry : hashMap.entrySet()) {
             String key = entry.getKey().toString();

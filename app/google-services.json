@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "15840775312",
+    "firebase_url": "https://analytics-android-88eae.firebaseio.com",
+    "project_id": "analytics-android-88eae",
+    "storage_bucket": "analytics-android-88eae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:15840775312:android:083d9b6ed3a89d28",
+        "android_client_info": {
+          "package_name": "com.hanekedesign.analyticsandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "15840775312-78uj72spi7aqmp36rg7k8hdqhnnc6baa.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "15840775312-fpjt770hu3nu5d8n8j1a6trib4kvtu0m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXM7_axLEZ5nRtk1Ho-pzPSNeay2QFP0c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-90565556-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

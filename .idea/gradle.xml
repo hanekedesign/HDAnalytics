@@ -8,7 +8,11 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/androidanalytics" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/firebase" />
+            <option value="$PROJECT_DIR$/googleanalytics" />
+            <option value="$PROJECT_DIR$/mixpanel" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

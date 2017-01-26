@@ -8,5 +8,9 @@ import com.hanekedesign.androidanalytics.AnalyticsProvider;
 
 public interface ProviderBuilder {
 
+    /**
+     * Builds the Analytics Provider's object to be used to send events
+     * @return          Active Analytics Provider Onject
+     */
     AnalyticsProvider build();
 }

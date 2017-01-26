@@ -4,10 +4,6 @@ import android.content.Context;
 
 import com.hanekedesign.androidanalytics.ProviderBuilder;
 
-/**
- * Created by nthunem on 1/19/17.
- */
-
 public class GoogleAnalyticsBuilder implements ProviderBuilder {
 
     //required

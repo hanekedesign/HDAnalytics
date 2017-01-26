@@ -1,21 +1,7 @@
 package com.hanekedesign.androidanalytics;
 
-import android.content.Context;
-import android.text.AndroidCharacter;
-
-import com.google.android.gms.analytics.ExceptionReporter;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-/**
- * Created by nthunem on 1/19/17.
- */
 
 public class Analytics {
 
@@ -38,31 +24,11 @@ public class Analytics {
      *
      * @param provider      Analytics provider to be removed
      */
-    public static void removeProvider(AnalyticsProvider provider) {
-        if(analyticsProviders.containsKey(provider.getClass().getName()))
-            analyticsProviders.remove(provider.getClass().getName());
+    public static void removeProvider(Class provider) {
+        if(analyticsProviders.containsKey(provider.getName()))
+            analyticsProviders.remove(provider.getName());
     }
 
-    /**
-     * Return all providers being used
-     * @return              Hashmap of all provider objects
-     */
-    public static HashMap<String, AnalyticsProvider> getAllProviders() {
-        return analyticsProviders;
-    }
-
-    /**
-     * Return AnalyitcsProvider instance of given provider object
-     *
-     * @param provider      Analytics provider
-     * @return              Class instance of given provider
-     */
-    public static AnalyticsProvider getProviderInstance(AnalyticsProvider provider) {
-        if(analyticsProviders.containsKey(provider.getClass().getName()))
-                return analyticsProviders.get(provider.getClass().getName());
-
-        return null;
-    }
 
     /**
      * Attach a userId to each event sent

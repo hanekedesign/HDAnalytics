@@ -4,10 +4,6 @@ import android.content.Context;
 
 import com.hanekedesign.androidanalytics.*;
 
-/**
- * Created by nthunem on 1/24/17.
- */
-
 public class FirebaseBuilder implements ProviderBuilder {
 
     //required

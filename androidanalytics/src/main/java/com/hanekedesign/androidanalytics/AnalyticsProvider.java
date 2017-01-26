@@ -1,12 +1,6 @@
 package com.hanekedesign.androidanalytics;
 
-import com.google.android.gms.analytics.Tracker;
-
 import java.util.HashMap;
-
-/**
- * Created by nthunem on 1/19/17.
- */
 
 public interface AnalyticsProvider {
 

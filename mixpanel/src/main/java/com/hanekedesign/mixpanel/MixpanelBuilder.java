@@ -11,22 +11,13 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by nthunem on 1/23/17.
- */
-
 public class MixpanelBuilder implements ProviderBuilder {
 
     //required
     String token;
     Context context;
     //optional
-    String userId;
-    boolean sendEventsImmediately = false;
     String defaultEventName = "Default";
-    String sessionEventName = "Session";
-    String screenViewEventName = "Screen View";
-    String exceptionEventName = "Exception";
 
     MixpanelAPI mixpanel;
     JSONObject properties = new JSONObject();

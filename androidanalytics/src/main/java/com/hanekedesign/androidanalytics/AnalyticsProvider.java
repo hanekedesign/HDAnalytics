@@ -1,35 +1,63 @@
 package com.hanekedesign.androidanalytics;
 
-import com.google.android.gms.analytics.Tracker;
-
 import java.util.HashMap;
-
-/**
- * Created by nthunem on 1/19/17.
- */
 
 public interface AnalyticsProvider {
 
+    /**
+     * Attach a userId to each event sent
+     *
+     * @param userId        User Id for each event
+     */
     void sendUserId(String userId);
 
-    // Send event event to provider
+    /**
+     * Send a basic event to the analytics provider's service
+     *
+     * @param event         Event name
+     */
     void sendEvent(String event);
 
-    // Send an event with additional properties and event name
+    /**
+     * Send an event with additional properties to the analytics provider's service
+     *
+     * @param event         Event name
+     * @param eventMap      Additional properties for the event
+     */
     void sendEventWithProperties(String event, HashMap<String, ?> eventMap);
 
-    // Send screen view event
+    /**
+     * Send a screen view event to the analytics provider's service
+     *
+     * @param screenName    Screen name
+     */
     void sendScreenViewEvent(String screenName);
 
-    // Send session event
+    /**
+     * Send a session event to the analytics provider's service
+     */
     void sendSessionEvent();
 
-    // Send a caught exception
+    /**
+     * Send an exception event to the analytics provider's service
+     *
+     * @param e
+     */
     void sendCaughtException(Exception e);
 
-    // Send a caught exception
+    /**
+     * Send an exception to the analytics provider's service
+     *
+     * @param e
+     * @param isFatal       Was the exception fatal
+     */
     void sendCaughtException(Exception e, boolean isFatal);
 
-    // Updates user profile
+    /**
+     * Add/Update the user information of the current user attached to all events
+     *
+     * @param key           Key of new/updated user property
+     * @param value         Value of new/updated user property
+     */
     void updateUserProfile(String key, Object value);
 }

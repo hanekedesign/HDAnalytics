@@ -48,28 +48,6 @@ public class GoogleAnalyticsBuilder implements ProviderBuilder {
     }
 
     /**
-     * Sets default category title
-     *
-     * @param defaultCategory   Default category title
-     * @return                  GoogleAnalyticsBuilder object
-     */
-    public GoogleAnalyticsBuilder defaultCategory(String defaultCategory) {
-        this.defaultCategory = defaultCategory;
-        return this;
-    }
-
-    /**
-     * Sets default action title
-     *
-     * @param defaultAction     Default action title
-     * @return                  GoogleAnalyticsBuilder object
-     */
-    public GoogleAnalyticsBuilder defaultAction(String defaultAction) {
-        this.defaultAction = defaultAction;
-        return this;
-    }
-
-    /**
      * Sets whether to send uncaught exceptions and app crashes to Google Analytics
      *
      * @param sendUncaughtExceptions    True/False

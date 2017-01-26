@@ -23,8 +23,6 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
     public static final String EVENT_CATEGORY = "category";
     public static final String EVENT_ACTION = "action";
     public static final String EVENT_LABEL = "label";
-    public static final String EXCEPTION_DESCRIPTION = "exception_description";
-    public static final String EXCEPTION_IS_FATAL = "exceptiion_is_fatal";
 
     private Tracker tracker;
     GoogleAnalytics analytics;

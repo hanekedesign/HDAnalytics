@@ -25,7 +25,7 @@ public class Analytics {
     private static HashMap<String, AnalyticsProvider> analyticsProviders = new HashMap<>();
 
     /**
-     * Adds provider to provider Hashmap
+     * Add an analytics provider to the service
      *
      * @param provider      Analytics provider to be used
      */
@@ -34,21 +34,17 @@ public class Analytics {
     }
 
     /**
-     * Removes the given provider from the provider Hashmap
+     * Remove an analytics provider by class
      *
      * @param provider      Analytics provider to be removed
      */
     public static void removeProvider(AnalyticsProvider provider) {
-        for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
-            if(entry.getKey().equalsIgnoreCase(provider.getClass().getName())) {
-                analyticsProviders.remove(entry.getKey());
-                break;
-            }
-        }
+        if(analyticsProviders.containsKey(provider.getClass().getName()))
+            analyticsProviders.remove(provider.getClass().getName());
     }
 
     /**
-     * Returns a Hashmap of all providers being used
+     * Return all providers being used
      * @return              Hashmap of all provider objects
      */
     public static HashMap<String, AnalyticsProvider> getAllProviders() {
@@ -56,22 +52,20 @@ public class Analytics {
     }
 
     /**
-     * Returns AnalyitcsProvider instance of given provider object
+     * Return AnalyitcsProvider instance of given provider object
      *
      * @param provider      Analytics provider
      * @return              Class instance of given provider
      */
     public static AnalyticsProvider getProviderInstance(AnalyticsProvider provider) {
-        for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
-            if(entry.getKey().equalsIgnoreCase(provider.getClass().getName())) {
-                return entry.getValue();
-            }
-        }
+        if(analyticsProviders.containsKey(provider.getClass().getName()))
+                return analyticsProviders.get(provider.getClass().getName());
+
         return null;
     }
 
     /**
-     * Attaches a userId to each event to be sent
+     * Attach a userId to each event sent
      *
      * @param userId        User Id for each event
      */
@@ -82,7 +76,7 @@ public class Analytics {
     }
 
     /**
-     * Sends a basic event to the analytics provider's service
+     * Send a basic event to the analytics provider's service
      *
      * @param event         Event name
      */
@@ -93,10 +87,10 @@ public class Analytics {
     }
 
     /**
-     * Sends an event with additional properties to the analytics provider's service
+     * Send an event with additional properties to the analytics provider's service
      *
      * @param event         Event name
-     * @param eventMap      Hashmap of key/value pairs
+     * @param eventMap      Additional properties for the event
      */
     public static void sendEventWithProperties(String event, HashMap eventMap) {
         for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
@@ -105,7 +99,7 @@ public class Analytics {
     }
 
     /**
-     * Sends a screen view event to the analytics provider's service
+     * Send a screen view event to the analytics provider's service
      *
      * @param screenName    Screen name
      */
@@ -116,7 +110,7 @@ public class Analytics {
     }
 
     /**
-     * Sends a session event to the analytics provider's service
+     * Send a session event to the analytics provider's service
      */
     public static void sendSessionEvent() {
         for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
@@ -125,9 +119,9 @@ public class Analytics {
     }
 
     /**
-     * Sends an exception event to the analytics provider's service
+     * Send an exception event to the analytics provider's service
      *
-     * @param e             Exception caught
+     * @param e
      */
     public static void sendCaughtException(Exception e) {
         for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
@@ -136,9 +130,9 @@ public class Analytics {
     }
 
     /**
-     * Sends an exception to the analytics provider's service
+     * Send an exception to the analytics provider's service
      *
-     * @param e             Exception caught
+     * @param e
      * @param isFatal       Was the exception fatal
      */
     public static void sendCaughtException(Exception e, boolean isFatal) {
@@ -148,7 +142,7 @@ public class Analytics {
     }
 
     /**
-     * Adds/Updates the user information of the current user attached to all events
+     * Add/Update the user information of the current user attached to all events
      *
      * @param key           Key of new/updated user property
      * @param value         Value of new/updated user property

@@ -1,3 +1,5 @@
+##HDAnalytics
+
 HDAnalytics is an Android Analytics tool similar to ARAnalytics for iOS or Analytics.js for javascript.
 
 HDAnalytics is an analytics abstraction for analytics integration for tracking user data and events.  It greatly reduces the work required to use an analytics provider.  HDAnalytics currently supports: Google Analytics, Mixpanel, and Firebase.
@@ -18,7 +20,8 @@ When sending an event, use the public static Analytics class.  The Analytics cla
 Analytics.sendEvent("Sample Event");
 
 
-Event Tracking:
+####Event Tracking:
+```java
 // Send event event to provider
 void sendEvent(String event);
 
@@ -27,25 +30,29 @@ void sendEventWithProperties(String event, HashMap<String, ?> eventMap);
 
 // Send session event
 void sendSessionEvent();
+```
 
-Exception Tracking:
+####Exception Tracking:
+```java
 // Send a caught exception
 void sendCaughtException(Exception e);
 
 // Send a caught exception
 void sendCaughtException(Exception e, boolean isFatal);
-
-User Data:
+```
+####User Data:
+```java
 // Send user data
 void sendUserId(String userId);
 
 // Updates user profile
 void updateUserProfile(String key, Object value);
-
-Screen Tracking:
+```
+####Screen Tracking:
+```java
 // Send screen view event
 void sendScreenViewEvent(String screenName);
+```
 
-
-Google Analytics & Firebase:
+####Google Analytics & Firebase:
 Google Analytics & Firebase automatically logs certain events such as session, screen views (Google Anayltics), and user data.  To expand on these, you can send any of the events with custom data to provide additional information.

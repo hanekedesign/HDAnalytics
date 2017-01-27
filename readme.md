@@ -58,10 +58,11 @@ void sendScreenViewEvent(String screenName);
 ```
 
 ####Google Analytics & Firebase:
-Google Analytics & Firebase automatically logs certain events such as session, screen views (Google Anayltics), and user data.  To expand on these, you can send any of the events with custom data to provide additional information.
-
-
-
+Google Analytics & Firebase automatically logs certain events such as session, screen views (Google Anayltics), and user data.  To expand on these, you can send any of the events with custom data to provide additional information.  
+<br />
+<br />
+<br />
+<br />
 Copyright 2017 Haneke Design
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:

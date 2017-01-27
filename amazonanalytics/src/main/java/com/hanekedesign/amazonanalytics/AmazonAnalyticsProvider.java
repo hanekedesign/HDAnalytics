@@ -17,6 +17,7 @@ public class AmazonAnalyticsProvider implements AnalyticsProvider {
     private String eventName;
     private String screenEventName;
     private String userIdName = "User ID";
+    private String sessionEvent = "Session";
     private String screenView = "Screen View";
     private String exceptionEvent = "Exception";
     private String exception = "Exception";
@@ -68,7 +69,11 @@ public class AmazonAnalyticsProvider implements AnalyticsProvider {
     }
 
     public void sendSessionEvent() {
-        submitEvents();
+        AnalyticsEvent analyticsEvent = analyticsManager.getEventClient().createEvent(sessionEvent);
+        if(sendUserId)
+            analyticsEvent.addAttribute(userIdName, userId);
+
+        analyticsManager.getEventClient().recordEvent(analyticsEvent);
     }
 
     public void sendCaughtException(Exception e) {
@@ -90,22 +95,5 @@ public class AmazonAnalyticsProvider implements AnalyticsProvider {
 
     public void updateUserProfile(String key, Object value) {
         userId = value.toString();
-    }
-
-    public void submitEvents() {
-        analyticsManager.getEventClient().submitEvents();
-    }
-
-    public void resumeSession() {
-        if(analyticsManager != null) {
-            analyticsManager.getSessionClient().resumeSession();
-        }
-    }
-
-    public void pauseSession() {
-        if(analyticsManager != null) {
-            analyticsManager.getSessionClient().resumeSession();
-            submitEvents();
-        }
     }
 }

@@ -4,16 +4,14 @@ HDAnalytics is an Android Analytics tool similar to ARAnalytics for iOS or Analy
 
 HDAnalytics is an analytics abstraction for analytics integration for tracking user data and events.  It greatly reduces the work required to use an analytics provider.  HDAnalytics currently supports: Google Analytics, Mixpanel, and Firebase.
 
-Integration:
+####Integration:
 
 First, add the dependency to your project's build.gradle file.
 ```java
 compile 'com.hanekedesign.androidanalytics:hdanalytics:1.0@aar'
 ```
 
-Usage:
-
-Setup:
+####Usage:
 
 Next, declare the analytics provider and add it to the Analytics object.  For example, if using Mixpanel Anayltics:
 ```java

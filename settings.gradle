@@ -1,1 +1,1 @@
-include ':androidanalytics', ':firebase', ':mixpanel', ':googleanalytics'
+include ':androidanalytics', ':firebase', ':mixpanel', ':googleanalytics', ':amazonanalytics'

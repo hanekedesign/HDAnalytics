@@ -1,4 +1,4 @@
-package com.hanekedesign.androidanalytics;
+package com.hanekedesign.hdanalytics;
 
 import java.util.HashMap;
 import java.util.Map;

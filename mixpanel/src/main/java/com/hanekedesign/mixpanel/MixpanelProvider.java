@@ -3,7 +3,7 @@ package com.hanekedesign.mixpanel;
 import android.content.Context;
 import android.util.Log;
 
-import com.hanekedesign.androidanalytics.AnalyticsProvider;
+import com.hanekedesign.hdanalytics.AnalyticsProvider;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 import org.json.JSONException;

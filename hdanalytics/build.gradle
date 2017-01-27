@@ -12,7 +12,7 @@ buildscript {
 apply plugin: 'com.android.library'
 apply plugin: 'com.jfrog.bintray'
 
-group = 'com.hanekedesign.androidanalytics'
+group = 'com.hanekedesign.hdanalytics'
 version = '0.1'
 
 task generateSourcesJar(type: Jar) {
@@ -25,12 +25,12 @@ bintray {
     key = '45538634b4a9176406a0dac321c8ab4d5e22aa8a'
     pkg {
         repo = 'maven'
-        name = 'com.hanekedesign.androidanalytics'
+        name = 'com.hanekedesign.hdanalytics'
 
         version {
-            name = version'-hdanalytics'
+            name = version '-hdanalytics'
             desc = 'HDAnalytics'
-            released  = new Date()
+            released = new Date()
             vcsTag = version
         }
 
@@ -67,7 +67,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.google.android.gms:play-services-analytics:9.8.0'
-    compile "com.google.android.gms:play-services:9.8.0"
+    compile 'com.google.android.gms:play-services-analytics:10.0.1'
+    compile 'com.google.android.gms:play-services:10.0.1'
     testCompile 'junit:junit:4.12'
 }

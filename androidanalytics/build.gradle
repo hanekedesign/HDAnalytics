@@ -1,4 +1,45 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3"
+    }
+}
+
 apply plugin: 'com.android.library'
+apply plugin: 'com.jfrog.bintray'
+
+group = 'com.hanekedesign.androidanalytics'
+version = '0.1'
+
+task generateSourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
+bintray {
+    user = 'hanekedesign'
+    key = '45538634b4a9176406a0dac321c8ab4d5e22aa8a'
+    pkg {
+        repo = 'maven'
+        name = 'com.hanekedesign.androidanalytics'
+
+        version {
+            name = version'-hdanalytics'
+            desc = 'HDAnalytics'
+            released  = new Date()
+            vcsTag = version
+        }
+
+        licenses = ['MIT']
+        vcsUrl = 'https://github.com/hanekedesign/HDAnalytics.git'
+        websiteUrl = 'https://github.com/hanekedesign/HDAnalytics.git'
+    }
+    configurations = ['archives']
+}
 
 android {
     compileSdkVersion 25
@@ -8,7 +49,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
-        versionName "1.0"
+        versionName = version
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         publishNonDefault true
     }

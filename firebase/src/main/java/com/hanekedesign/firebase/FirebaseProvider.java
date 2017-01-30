@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crash.FirebaseCrash;
-import com.hanekedesign.androidanalytics.AnalyticsProvider;
+import com.hanekedesign.hdanalytics.AnalyticsProvider;
 
 import java.util.HashMap;
 import java.util.Map;

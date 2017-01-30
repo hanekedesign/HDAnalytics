@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.amazonaws.mobileconnectors.amazonmobileanalytics.AnalyticsEvent;
 import com.amazonaws.mobileconnectors.amazonmobileanalytics.MobileAnalyticsManager;
-import com.hanekedesign.androidanalytics.AnalyticsProvider;
+import com.hanekedesign.hdanalytics.AnalyticsProvider;
 
 import java.util.HashMap;
 import java.util.Map;

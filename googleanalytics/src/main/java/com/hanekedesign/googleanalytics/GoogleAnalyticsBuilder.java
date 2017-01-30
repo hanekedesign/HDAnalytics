@@ -2,7 +2,7 @@ package com.hanekedesign.googleanalytics;
 
 import android.content.Context;
 
-import com.hanekedesign.androidanalytics.ProviderBuilder;
+import com.hanekedesign.hdanalytics.ProviderBuilder;
 
 public class GoogleAnalyticsBuilder implements ProviderBuilder {
 

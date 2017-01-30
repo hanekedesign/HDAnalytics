@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.amazonaws.mobileconnectors.amazonmobileanalytics.InitializationException;
 import com.amazonaws.mobileconnectors.amazonmobileanalytics.MobileAnalyticsManager;
-import com.hanekedesign.androidanalytics.ProviderBuilder;
+import com.hanekedesign.hdanalytics.ProviderBuilder;
 
 public class AmazonAnalyticsBuilder implements ProviderBuilder {
 

@@ -2,7 +2,7 @@ package com.hanekedesign.firebase;
 
 import android.content.Context;
 
-import com.hanekedesign.androidanalytics.*;
+import com.hanekedesign.hdanalytics.ProviderBuilder;
 
 public class FirebaseBuilder implements ProviderBuilder {
 

@@ -110,4 +110,21 @@ public class MixpanelProvider implements AnalyticsProvider {
         mixpanel.getPeople().identify(userId);
         mixpanel.getPeople().set(key, value);
     }
+
+    @Override
+    public void addSuperProperties(HashMap<String, ?> hashMap) {
+        JSONObject properties = new JSONObject();
+        for(Map.Entry<String, ?> entry : hashMap.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            try {
+                properties.put(key, value);
+                mixpanel.registerSuperProperties(properties);
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

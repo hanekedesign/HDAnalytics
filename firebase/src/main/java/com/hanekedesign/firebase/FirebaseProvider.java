@@ -108,4 +108,9 @@ public class FirebaseProvider implements AnalyticsProvider {
     public void updateUserProfile(String key, Object value) {
         firebaseAnalytics.setUserProperty(key, value.toString());
     }
+
+    @Override
+    public void addSuperProperties(HashMap<String, ?> hashMap) {
+
+    }
 }

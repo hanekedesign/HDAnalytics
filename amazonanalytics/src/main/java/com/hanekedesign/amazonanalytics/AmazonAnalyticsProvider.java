@@ -96,4 +96,9 @@ public class AmazonAnalyticsProvider implements AnalyticsProvider {
     public void updateUserProfile(String key, Object value) {
         userId = value.toString();
     }
+
+    @Override
+    public void addSuperProperties(HashMap<String, ?> hashMap) {
+
+    }
 }

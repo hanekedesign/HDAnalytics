@@ -153,4 +153,9 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
     public void updateUserProfile(String key, Object value) {
 
     }
+
+    @Override
+    public void addSuperProperties(HashMap<String, ?> hashMap) {
+
+    }
 }

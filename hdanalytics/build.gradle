@@ -1,44 +1,19 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: "com.jfrog.bintray"
+
+version = "0.1"
+
 buildscript {
     repositories {
         maven {
-            url "https://plugins.gradle.org/m2/"
+            jcenter()
+
         }
     }
     dependencies {
-        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3"
+
     }
-}
-
-apply plugin: 'com.android.library'
-apply plugin: 'com.jfrog.bintray'
-
-group = 'com.hanekedesign.hdanalytics'
-version = '0.1'
-
-task generateSourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier 'sources'
-}
-
-bintray {
-    user = 'hanekedesign'
-    key = '45538634b4a9176406a0dac321c8ab4d5e22aa8a'
-    pkg {
-        repo = 'HDAnalytics'
-        name = 'com.hanekedesign.hdanalytics'
-
-        version {
-            name = '0.1-hdanalytics'
-            desc = 'HDAnalytics'
-            released = new Date()
-            vcsTag = version
-        }
-
-        licenses = ['MIT']
-        vcsUrl = 'https://github.com/hanekedesign/HDAnalytics.git'
-        websiteUrl = 'https://github.com/hanekedesign/HDAnalytics.git'
-    }
-    configurations = ['archives']
 }
 
 android {
@@ -53,12 +28,6 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         publishNonDefault true
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
 }
 
 dependencies {
@@ -67,4 +36,86 @@ dependencies {
     compile 'com.google.android.gms:play-services-analytics:9.8.0'
     compile 'com.android.support:multidex:1.0.1'
     testCompile 'junit:junit:4.12'
+}
+
+def siteUrl = 'https://github.com/hanekedesign/HDAnalytics.git'
+def gitUrl = 'https://github.com/hanekedesign/HDAnalytics.git'
+
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'aar'
+
+                // Add your description here
+                name 'com.hanekedesign.hdanalytics'
+                description = 'Android Analytics Library'
+                url siteUrl
+
+                // Set your license
+                licenses {
+                    license {
+                        name 'MIT'
+                        url 'https://opensource.org/licenses/MIT'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'hanekedesign'
+                        name 'Haneke Design'
+                        email 'admin@hanekedesign.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = "HDAnalytics"
+        // it is the name that appears in bintray when logged
+        name = "hdanalytics"
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["MIT"]
+        publish = true
+        version {
+            gpg {
+                sign = false
+            }
+        }
+    }
 }

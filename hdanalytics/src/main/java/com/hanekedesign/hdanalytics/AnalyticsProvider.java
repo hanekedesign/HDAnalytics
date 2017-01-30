@@ -60,4 +60,10 @@ public interface AnalyticsProvider {
      * @param value         Value of new/updated user property
      */
     void updateUserProfile(String key, Object value);
+
+    /**
+     * Add/update super properties for each event
+     * @param hashMap
+     */
+    void addSuperProperties(HashMap<String, ?> hashMap);
 }

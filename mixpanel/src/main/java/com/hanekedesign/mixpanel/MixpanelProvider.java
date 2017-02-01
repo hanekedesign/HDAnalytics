@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.hanekedesign.hdanalytics.AnalyticsProvider;
+import com.hanekedesign.hdanalytics.TimedEventException;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 import org.json.JSONException;
@@ -22,6 +23,7 @@ public class MixpanelProvider implements AnalyticsProvider {
     private String sessionEventName = "Session";
     private String screenViewEventName = "Screen View";
     private String exceptionEventName = "Exception";
+    private HashMap<String, String> timedEvents = new HashMap<>();
 
     private MixpanelAPI mixpanel;
 
@@ -129,7 +131,36 @@ public class MixpanelProvider implements AnalyticsProvider {
     }
 
     @Override
+    public void removeSuperProperty(String propertyName) {
+        mixpanel.unregisterSuperProperty(propertyName);
+    }
+
+    @Override
     public void removeAllSuperProperties() {
         mixpanel.clearSuperProperties();
+    }
+
+    @Override
+    public void startTimedEvent(String eventName) {
+        mixpanel.timeEvent(eventName);
+        timedEvents.put(eventName, null);
+    }
+
+    @Override
+    public void stopTimedEvent(String eventName) throws TimedEventException {
+        if(!timedEvents.containsKey(eventName))
+            throw new TimedEventException("Event name does not exist");
+
+        timedEvents.remove(eventName);
+        sendEvent(eventName);
+    }
+
+    @Override
+    public void stopTimedEvent(String eventName, HashMap hashMap) throws TimedEventException {
+        if(!timedEvents.containsKey(eventName))
+            throw new TimedEventException("Event name does not exist");
+
+        timedEvents.remove(eventName);
+        sendEventWithProperties(eventName, hashMap);
     }
 }

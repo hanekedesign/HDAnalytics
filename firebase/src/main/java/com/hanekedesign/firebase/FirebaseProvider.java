@@ -7,7 +7,10 @@ import android.util.Log;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crash.FirebaseCrash;
 import com.hanekedesign.hdanalytics.AnalyticsProvider;
+import com.hanekedesign.hdanalytics.TimedEventException;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,8 +22,9 @@ public class FirebaseProvider implements AnalyticsProvider {
     private String screenNameTitle;
     private String sessionTitle;
     private String sessionEvent = "new_session";
-
     private String userId;
+    private HashMap superProperties = new HashMap();
+    private HashMap<String, Date> timedEvents = new HashMap<>();
 
     private FirebaseAnalytics firebaseAnalytics;
 
@@ -77,6 +81,8 @@ public class FirebaseProvider implements AnalyticsProvider {
                 else {}
             }
         }
+        if(!superProperties.isEmpty())
+            addSuperPropertyToEvent(params, superProperties);
         firebaseAnalytics.logEvent(eventNameTitle, params);
     }
 
@@ -84,6 +90,8 @@ public class FirebaseProvider implements AnalyticsProvider {
     public void sendScreenViewEvent(String screenName) {
         Bundle params = new Bundle();
         params.putString(screenNameTitle, screenName);
+        if(!superProperties.isEmpty())
+            addSuperPropertyToEvent(params, superProperties);
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
     }
 
@@ -91,6 +99,8 @@ public class FirebaseProvider implements AnalyticsProvider {
     public void sendSessionEvent() {
         Bundle params = new Bundle();
         params.putString(sessionTitle, sessionEvent);
+        if(!superProperties.isEmpty())
+            addSuperPropertyToEvent(params, superProperties);
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
     }
 
@@ -111,11 +121,76 @@ public class FirebaseProvider implements AnalyticsProvider {
 
     @Override
     public void addSuperProperties(HashMap<String, ?> hashMap) {
+        for(Map.Entry<String, ?> entry : hashMap.entrySet()) {
+            superProperties.put(entry.getKey(), entry.getValue());
+        }
+    }
 
+    @Override
+    public void removeSuperProperty(String propertyName) {
+        if(superProperties.containsKey(propertyName))
+            superProperties.remove(propertyName);
     }
 
     @Override
     public void removeAllSuperProperties() {
+        superProperties.clear();
+    }
 
+    private void addSuperPropertyToEvent(Bundle params, HashMap<String, ?> hashMap) {
+        for(Map.Entry<String, ?> entry : hashMap.entrySet()) {
+            if(entry.getValue() instanceof String) {
+                params.putString(entry.getKey(), ((String) entry.getValue()));
+            }
+            else if(entry.getValue() instanceof Integer) {
+                params.putInt(entry.getKey(), ((Integer) entry.getValue()));
+            }
+            else if(entry.getValue() instanceof Boolean) {
+                params.putBoolean(entry.getKey(), ((Boolean) entry.getValue()));
+            }
+            else if(entry.getValue() instanceof Float) {
+                params.putFloat(entry.getKey(), ((Float) entry.getValue()));
+            }
+            else if(entry.getValue() instanceof Double) {
+                params.putDouble(entry.getKey(), ((Double) entry.getValue()));
+            }
+            else if(entry.getValue() instanceof Character) {
+                params.putChar(entry.getKey(), ((Character) entry.getValue()));
+            }
+            else if(entry.getValue() instanceof CharSequence) {
+                params.putCharSequence(entry.getKey(), ((CharSequence) entry.getValue()));
+            }
+            else {}
+        }
+    }
+
+    @Override
+    public void startTimedEvent(String eventName) {
+        timedEvents.put(eventName, new Date());
+    }
+
+    @Override
+    public void stopTimedEvent(String eventName) throws TimedEventException {
+        if(!timedEvents.containsKey(eventName))
+            throw new TimedEventException("Event name does not exist");
+
+        stopTimedEvent(eventName, null);
+    }
+
+    @Override
+    public void stopTimedEvent(String eventName, HashMap hashMap) throws TimedEventException {
+        if(!timedEvents.containsKey(eventName))
+            throw new TimedEventException("Event name does not exist");
+
+        Date oldDate = timedEvents.get(eventName);
+        Date newDate = new Date();
+
+        long eventTime = newDate.getTime() - oldDate.getTime();
+        String eventTimeString = (new SimpleDateFormat("hh:mm:ss")).format(new Date(eventTime));
+
+        hashMap.put("Duration", eventTimeString);
+        timedEvents.remove(eventName);
+
+        sendEventWithProperties(eventName, hashMap);
     }
 }

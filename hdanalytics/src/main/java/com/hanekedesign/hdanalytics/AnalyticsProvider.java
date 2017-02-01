@@ -63,12 +63,42 @@ public interface AnalyticsProvider {
 
     /**
      * Add/update super properties for each event
+     *
      * @param hashMap
      */
     void addSuperProperties(HashMap<String, ?> hashMap);
 
     /**
-     * Remove all superproperties for a given user
+     * Remove a super property for the current user
+     *
+     * @param propertyName  Name of the intended super property to be removed
+     */
+    void removeSuperProperty(String propertyName);
+
+    /**
+     * Remove all super properties for a given user
      */
     void removeAllSuperProperties();
+
+    /**
+     * Start a timed event
+     *
+     * @param eventName     Event name to start timer on
+     */
+    void startTimedEvent(String eventName);
+
+    /**
+     * Stop a timed event and send the event
+     *
+     * @param eventName     Event name to be stopped and sent
+     */
+    void stopTimedEvent(String eventName) throws TimedEventException;
+
+    /**
+     * Stop a timed event and send the event with properties
+     *
+     * @param eventName     Event name to be stopped and sent
+     * @param hashMap
+     */
+    void stopTimedEvent(String eventName, HashMap hashMap) throws TimedEventException;
 }

@@ -8,7 +8,10 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.hanekedesign.hdanalytics.AnalyticsProvider;
+import com.hanekedesign.hdanalytics.TimedEventException;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +31,7 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
     //optional
     private String category = "Default";
     private String action = "Default";
+    private HashMap<String, String> timedEvents = new HashMap<>();
 
     GoogleAnalyticsProvider(GoogleAnalyticsBuilder builder) {
         //required
@@ -160,7 +164,44 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
     }
 
     @Override
+    public void removeSuperProperty(String propertyName) {
+
+    }
+
+    @Override
     public void removeAllSuperProperties() {
 
+    }
+
+    @Override
+    public void startTimedEvent(String eventName) {
+        timedEvents.put(eventName, (new Date()).toString());
+    }
+
+    @Override
+    public void stopTimedEvent(String eventName) throws TimedEventException {
+        if(!timedEvents.containsKey(eventName))
+            throw new TimedEventException("Event name does not exist");
+
+        stopTimedEvent(eventName, new HashMap());
+    }
+
+    @Override
+    public void stopTimedEvent(String eventName, HashMap hashMap) throws TimedEventException {
+        if(!timedEvents.containsKey(eventName))
+            throw new TimedEventException("Event name does not exist");
+
+        long oldDate = Date.parse(timedEvents.get(eventName));
+        long newDate = Date.parse(new Date().toString());
+
+        long eventTime = newDate - oldDate;
+        String eventTimeString = (new SimpleDateFormat("hh:mm:ss")).format(new Date(eventTime));
+
+        hashMap.put(EVENT_CATEGORY, eventName);
+        hashMap.put(EVENT_ACTION, "Duration");
+        hashMap.put(EVENT_LABEL, eventTimeString);
+        timedEvents.remove(eventName);
+
+        sendEventWithProperties(eventName, hashMap);
     }
 }

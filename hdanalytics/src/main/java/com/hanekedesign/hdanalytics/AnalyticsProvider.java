@@ -92,7 +92,7 @@ public interface AnalyticsProvider {
      *
      * @param eventName     Event name to be stopped and sent
      */
-    void stopTimedEvent(String eventName);
+    void stopTimedEvent(String eventName) throws TimedEventException;
 
     /**
      * Stop a timed event and send the event with properties
@@ -100,5 +100,5 @@ public interface AnalyticsProvider {
      * @param eventName     Event name to be stopped and sent
      * @param hashMap
      */
-    void stopTimedEvent(String eventName, HashMap hashMap);
+    void stopTimedEvent(String eventName, HashMap hashMap) throws TimedEventException;
 }

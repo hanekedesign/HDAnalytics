@@ -176,7 +176,7 @@ public class Analytics {
      * Stop a timed event and send the event with properties
      *
      * @param eventName     Event name to be stopped and sent
-     * @param hashMap
+     * @param hashMap       Additional properties to be sent with the timed event
      */
     public static void stopTimedEvent(String eventName, HashMap hashMap) {
         for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {

@@ -8,6 +8,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.hanekedesign.hdanalytics.AnalyticsProvider;
+import com.hanekedesign.hdanalytics.TimedEventException;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -178,17 +179,17 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
     }
 
     @Override
-    public void stopTimedEvent(String eventName) throws RuntimeException {
+    public void stopTimedEvent(String eventName) throws TimedEventException {
         if(!timedEvents.containsKey(eventName))
-            throw new RuntimeException("Event name does not exist");
+            throw new TimedEventException("Event name does not exist");
 
         stopTimedEvent(eventName, new HashMap());
     }
 
     @Override
-    public void stopTimedEvent(String eventName, HashMap hashMap) throws RuntimeException {
+    public void stopTimedEvent(String eventName, HashMap hashMap) throws TimedEventException {
         if(!timedEvents.containsKey(eventName))
-            throw new RuntimeException("Event name does not exist");
+            throw new TimedEventException("Event name does not exist");
 
         long oldDate = Date.parse(timedEvents.get(eventName));
         long newDate = Date.parse(new Date().toString());

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.hanekedesign.hdanalytics.AnalyticsProvider;
+import com.hanekedesign.hdanalytics.TimedEventException;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 import org.json.JSONException;
@@ -146,18 +147,18 @@ public class MixpanelProvider implements AnalyticsProvider {
     }
 
     @Override
-    public void stopTimedEvent(String eventName) throws RuntimeException {
+    public void stopTimedEvent(String eventName) throws TimedEventException {
         if(!timedEvents.containsKey(eventName))
-            throw new RuntimeException("Event name does not exist");
+            throw new TimedEventException("Event name does not exist");
 
         timedEvents.remove(eventName);
         sendEvent(eventName);
     }
 
     @Override
-    public void stopTimedEvent(String eventName, HashMap hashMap) throws RuntimeException {
+    public void stopTimedEvent(String eventName, HashMap hashMap) throws TimedEventException {
         if(!timedEvents.containsKey(eventName))
-            throw new RuntimeException("Event name does not exist");
+            throw new TimedEventException("Event name does not exist");
 
         timedEvents.remove(eventName);
         sendEventWithProperties(eventName, hashMap);

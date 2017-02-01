@@ -5,6 +5,7 @@ import android.content.Context;
 import com.amazonaws.mobileconnectors.amazonmobileanalytics.AnalyticsEvent;
 import com.amazonaws.mobileconnectors.amazonmobileanalytics.MobileAnalyticsManager;
 import com.hanekedesign.hdanalytics.AnalyticsProvider;
+import com.hanekedesign.hdanalytics.TimedEventException;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -140,17 +141,17 @@ public class AmazonAnalyticsProvider implements AnalyticsProvider {
     }
 
     @Override
-    public void stopTimedEvent(String eventName) throws RuntimeException {
+    public void stopTimedEvent(String eventName) throws TimedEventException {
         if(!timedEvents.containsKey(eventName))
-            throw new RuntimeException("Event name does not exist");
+            throw new TimedEventException("Event name does not exist");
 
         stopTimedEvent(eventName, null);
     }
 
     @Override
-    public void stopTimedEvent(String eventName, HashMap hashMap) throws RuntimeException {
+    public void stopTimedEvent(String eventName, HashMap hashMap) throws TimedEventException {
         if(!timedEvents.containsKey(eventName))
-            throw new RuntimeException("Event name does not exist");
+            throw new TimedEventException("Event name does not exist");
 
         Date oldDate = timedEvents.get(eventName);
         Date newDate = new Date();

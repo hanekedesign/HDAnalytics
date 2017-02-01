@@ -101,4 +101,9 @@ public class AmazonAnalyticsProvider implements AnalyticsProvider {
     public void addSuperProperties(HashMap<String, ?> hashMap) {
 
     }
+
+    @Override
+    public void removeAllSuperProperties() {
+
+    }
 }

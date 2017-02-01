@@ -127,4 +127,9 @@ public class MixpanelProvider implements AnalyticsProvider {
             }
         }
     }
+
+    @Override
+    public void removeAllSuperProperties() {
+        mixpanel.clearSuperProperties();
+    }
 }

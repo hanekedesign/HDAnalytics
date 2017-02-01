@@ -66,4 +66,9 @@ public interface AnalyticsProvider {
      * @param hashMap
      */
     void addSuperProperties(HashMap<String, ?> hashMap);
+
+    /**
+     * Remove all superproperties for a given user
+     */
+    void removeAllSuperProperties();
 }

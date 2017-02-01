@@ -121,6 +121,7 @@ public class Analytics {
 
     /**
      * Add/update super properties that are sent with every event
+     *
      * @param hashMap
      */
     public static void addSuperProperties(HashMap<String, ?> hashMap) {
@@ -131,6 +132,7 @@ public class Analytics {
 
     /**
      * Remove a super property for the current user
+     *
      * @param propertyName  Name of the intended super property to be removed
      */
     public static void removeSuperProperty(String propertyName) {
@@ -145,6 +147,40 @@ public class Analytics {
     public static void removeAllSuperProperties() {
         for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
             entry.getValue().removeAllSuperProperties();
+        }
+    }
+
+    /**
+     * Start a timed event
+     *
+     * @param eventName     Event name to start timer on
+     */
+    public static void startTimedEvent(String eventName) {
+        for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
+            entry.getValue().startTimedEvent(eventName);
+        }
+    }
+
+    /**
+     * Stop a timed event and send the event
+     *
+     * @param eventName     Event name to be stopped and sent
+     */
+    public static void stopTimedEvent(String eventName) {
+        for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
+            entry.getValue().stopTimedEvent(eventName);
+        }
+    }
+
+    /**
+     * Stop a timed event and send the event with properties
+     *
+     * @param eventName     Event name to be stopped and sent
+     * @param hashMap
+     */
+    public static void stopTimedEvent(String eventName, HashMap hashMap) {
+        for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
+            entry.getValue().stopTimedEvent(eventName, hashMap);
         }
     }
 }

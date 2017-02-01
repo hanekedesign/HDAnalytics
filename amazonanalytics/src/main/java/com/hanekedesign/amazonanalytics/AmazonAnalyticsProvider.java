@@ -129,4 +129,19 @@ public class AmazonAnalyticsProvider implements AnalyticsProvider {
             analyticsEvent.addAttribute(entry.getKey(), entry.getValue().toString());
         }
     }
+
+    @Override
+    public void startTimedEvent(String eventName) {
+
+    }
+
+    @Override
+    public void stopTimedEvent(String eventName) {
+
+    }
+
+    @Override
+    public void stopTimedEvent(String eventName, HashMap hashMap) {
+
+    }
 }

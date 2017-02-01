@@ -168,4 +168,19 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
     public void removeAllSuperProperties() {
 
     }
+
+    @Override
+    public void startTimedEvent(String eventName) {
+
+    }
+
+    @Override
+    public void stopTimedEvent(String eventName) {
+
+    }
+
+    @Override
+    public void stopTimedEvent(String eventName, HashMap hashMap) {
+
+    }
 }

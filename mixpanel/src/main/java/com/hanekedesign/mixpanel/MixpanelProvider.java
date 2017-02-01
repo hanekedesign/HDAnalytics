@@ -137,4 +137,19 @@ public class MixpanelProvider implements AnalyticsProvider {
     public void removeAllSuperProperties() {
         mixpanel.clearSuperProperties();
     }
+
+    @Override
+    public void startTimedEvent(String eventName) {
+        mixpanel.timeEvent(eventName);
+    }
+
+    @Override
+    public void stopTimedEvent(String eventName) {
+        sendEvent(eventName);
+    }
+
+    @Override
+    public void stopTimedEvent(String eventName, HashMap hashMap) {
+        sendEventWithProperties(eventName, hashMap);
+    }
 }

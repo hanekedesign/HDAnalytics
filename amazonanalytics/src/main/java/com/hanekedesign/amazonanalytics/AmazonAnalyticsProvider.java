@@ -22,6 +22,7 @@ public class AmazonAnalyticsProvider implements AnalyticsProvider {
     private String exceptionEvent = "Exception";
     private String exception = "Exception";
     private String fatal = "Fatal";
+    private HashMap superProperties = new HashMap();
 
     private MobileAnalyticsManager analyticsManager;
 
@@ -55,6 +56,8 @@ public class AmazonAnalyticsProvider implements AnalyticsProvider {
         }
         if(sendUserId)
             analyticsEvent.addAttribute(userIdName, userId);
+        if(!superProperties.isEmpty())
+            addSuperPropertyToEvent(analyticsEvent, superProperties);
 
         analyticsManager.getEventClient().recordEvent(analyticsEvent);
     }
@@ -64,6 +67,8 @@ public class AmazonAnalyticsProvider implements AnalyticsProvider {
                 .withAttribute(screenView, screenName);
         if(sendUserId)
             analyticsEvent.addAttribute(userIdName, userId);
+        if(!superProperties.isEmpty())
+            addSuperPropertyToEvent(analyticsEvent, superProperties);
 
         analyticsManager.getEventClient().recordEvent(analyticsEvent);
     }
@@ -72,6 +77,8 @@ public class AmazonAnalyticsProvider implements AnalyticsProvider {
         AnalyticsEvent analyticsEvent = analyticsManager.getEventClient().createEvent(sessionEvent);
         if(sendUserId)
             analyticsEvent.addAttribute(userIdName, userId);
+        if(!superProperties.isEmpty())
+            addSuperPropertyToEvent(analyticsEvent, superProperties);
 
         analyticsManager.getEventClient().recordEvent(analyticsEvent);
     }
@@ -89,6 +96,8 @@ public class AmazonAnalyticsProvider implements AnalyticsProvider {
             analyticsEvent.addAttribute(fatal, "false");
         if(sendUserId)
             analyticsEvent.addAttribute(userIdName, userId);
+        if(!superProperties.isEmpty())
+            addSuperPropertyToEvent(analyticsEvent, superProperties);
 
         analyticsManager.getEventClient().recordEvent(analyticsEvent);
     }
@@ -99,11 +108,25 @@ public class AmazonAnalyticsProvider implements AnalyticsProvider {
 
     @Override
     public void addSuperProperties(HashMap<String, ?> hashMap) {
+        for(Map.Entry<String, ?> entry : hashMap.entrySet()) {
+            superProperties.put(entry.getKey(), entry.getValue());
+        }
+    }
 
+    @Override
+    public void removeSuperProperty(String propertyName) {
+        if(superProperties.containsKey(propertyName))
+            superProperties.remove(propertyName);
     }
 
     @Override
     public void removeAllSuperProperties() {
+        superProperties.clear();
+    }
 
+    private void addSuperPropertyToEvent(AnalyticsEvent analyticsEvent, HashMap<String, ?> hashMap) {
+        for(Map.Entry<String, ?> entry : hashMap.entrySet()) {
+            analyticsEvent.addAttribute(entry.getKey(), entry.getValue().toString());
+        }
     }
 }

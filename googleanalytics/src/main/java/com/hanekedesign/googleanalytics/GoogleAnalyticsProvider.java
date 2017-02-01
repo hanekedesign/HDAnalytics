@@ -160,6 +160,11 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
     }
 
     @Override
+    public void removeSuperProperty(String propertyName) {
+
+    }
+
+    @Override
     public void removeAllSuperProperties() {
 
     }

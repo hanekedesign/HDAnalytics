@@ -129,6 +129,11 @@ public class MixpanelProvider implements AnalyticsProvider {
     }
 
     @Override
+    public void removeSuperProperty(String propertyName) {
+        mixpanel.unregisterSuperProperty(propertyName);
+    }
+
+    @Override
     public void removeAllSuperProperties() {
         mixpanel.clearSuperProperties();
     }

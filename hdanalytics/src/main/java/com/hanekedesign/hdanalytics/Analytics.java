@@ -120,12 +120,22 @@ public class Analytics {
     }
 
     /**
-     * Add/update super proerties that are sent with every event
+     * Add/update super properties that are sent with every event
      * @param hashMap
      */
     public static void addSuperProperties(HashMap<String, ?> hashMap) {
         for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
             entry.getValue().addSuperProperties(hashMap);
+        }
+    }
+
+    /**
+     * Remove a super property for the current user
+     * @param propertyName  Name of the intended super property to be removed
+     */
+    public static void removeSuperProperty(String propertyName) {
+        for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
+            entry.getValue().removeSuperProperty(propertyName);
         }
     }
 

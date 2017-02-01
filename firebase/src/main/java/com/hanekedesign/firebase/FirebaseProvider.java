@@ -115,6 +115,11 @@ public class FirebaseProvider implements AnalyticsProvider {
     }
 
     @Override
+    public void removeSuperProperty(String propertyName) {
+
+    }
+
+    @Override
     public void removeAllSuperProperties() {
 
     }

@@ -169,7 +169,7 @@ public class FirebaseProvider implements AnalyticsProvider {
     }
 
     @Override
-    public void stopTimedEvent(String eventName) throws NullPointerException {
+    public void stopTimedEvent(String eventName) throws RuntimeException {
         if(!timedEvents.containsKey(eventName))
             throw new RuntimeException("Event name does not exist");
 
@@ -177,7 +177,7 @@ public class FirebaseProvider implements AnalyticsProvider {
     }
 
     @Override
-    public void stopTimedEvent(String eventName, HashMap hashMap) throws NullPointerException {
+    public void stopTimedEvent(String eventName, HashMap hashMap) throws RuntimeException {
         if(!timedEvents.containsKey(eventName))
             throw new RuntimeException("Event name does not exist");
 

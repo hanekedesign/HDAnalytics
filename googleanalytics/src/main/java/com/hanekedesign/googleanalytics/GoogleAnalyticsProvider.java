@@ -178,7 +178,7 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
     }
 
     @Override
-    public void stopTimedEvent(String eventName) throws NullPointerException {
+    public void stopTimedEvent(String eventName) throws RuntimeException {
         if(!timedEvents.containsKey(eventName))
             throw new RuntimeException("Event name does not exist");
 
@@ -186,7 +186,7 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
     }
 
     @Override
-    public void stopTimedEvent(String eventName, HashMap hashMap) throws NullPointerException {
+    public void stopTimedEvent(String eventName, HashMap hashMap) throws RuntimeException {
         if(!timedEvents.containsKey(eventName))
             throw new RuntimeException("Event name does not exist");
 
@@ -195,7 +195,7 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
 
         long eventTime = newDate - oldDate;
         String eventTimeString = (new SimpleDateFormat("hh:mm:ss")).format(new Date(eventTime));
-        
+
         hashMap.put(EVENT_CATEGORY, eventName);
         hashMap.put(EVENT_ACTION, "Duration");
         hashMap.put(EVENT_LABEL, eventTimeString);

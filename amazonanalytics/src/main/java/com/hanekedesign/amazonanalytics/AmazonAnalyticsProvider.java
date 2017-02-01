@@ -6,6 +6,9 @@ import com.amazonaws.mobileconnectors.amazonmobileanalytics.AnalyticsEvent;
 import com.amazonaws.mobileconnectors.amazonmobileanalytics.MobileAnalyticsManager;
 import com.hanekedesign.hdanalytics.AnalyticsProvider;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +26,7 @@ public class AmazonAnalyticsProvider implements AnalyticsProvider {
     private String exception = "Exception";
     private String fatal = "Fatal";
     private HashMap superProperties = new HashMap();
+    private HashMap<String, Date> timedEvents = new HashMap<>();
 
     private MobileAnalyticsManager analyticsManager;
 
@@ -132,16 +136,31 @@ public class AmazonAnalyticsProvider implements AnalyticsProvider {
 
     @Override
     public void startTimedEvent(String eventName) {
-
+        timedEvents.put(eventName, new Date());
     }
 
     @Override
-    public void stopTimedEvent(String eventName) {
+    public void stopTimedEvent(String eventName) throws NullPointerException {
+        if(!timedEvents.containsKey(eventName))
+            throw new RuntimeException("Event name does not exist");
 
+        stopTimedEvent(eventName, null);
     }
 
     @Override
-    public void stopTimedEvent(String eventName, HashMap hashMap) {
+    public void stopTimedEvent(String eventName, HashMap hashMap) throws NullPointerException {
+        if(!timedEvents.containsKey(eventName))
+            throw new RuntimeException("Event name does not exist");
 
+        Date oldDate = timedEvents.get(eventName);
+        Date newDate = new Date();
+
+        long eventTime = newDate.getTime() - oldDate.getTime();
+        String eventTimeString = (new SimpleDateFormat("hh:mm:ss")).format(new Date(eventTime));
+
+        hashMap.put("Duration", eventTimeString);
+        timedEvents.remove(eventName);
+
+        sendEventWithProperties(eventName, hashMap);
     }
 }

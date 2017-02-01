@@ -22,6 +22,7 @@ public class MixpanelProvider implements AnalyticsProvider {
     private String sessionEventName = "Session";
     private String screenViewEventName = "Screen View";
     private String exceptionEventName = "Exception";
+    private HashMap<String, String> timedEvents = new HashMap<>();
 
     private MixpanelAPI mixpanel;
 
@@ -141,15 +142,24 @@ public class MixpanelProvider implements AnalyticsProvider {
     @Override
     public void startTimedEvent(String eventName) {
         mixpanel.timeEvent(eventName);
+        timedEvents.put(eventName, null);
     }
 
     @Override
-    public void stopTimedEvent(String eventName) {
+    public void stopTimedEvent(String eventName) throws RuntimeException {
+        if(!timedEvents.containsKey(eventName))
+            throw new RuntimeException("Event name does not exist");
+
+        timedEvents.remove(eventName);
         sendEvent(eventName);
     }
 
     @Override
-    public void stopTimedEvent(String eventName, HashMap hashMap) {
+    public void stopTimedEvent(String eventName, HashMap hashMap) throws RuntimeException {
+        if(!timedEvents.containsKey(eventName))
+            throw new RuntimeException("Event name does not exist");
+
+        timedEvents.remove(eventName);
         sendEventWithProperties(eventName, hashMap);
     }
 }

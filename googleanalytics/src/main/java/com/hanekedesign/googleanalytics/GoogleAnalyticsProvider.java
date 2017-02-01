@@ -158,4 +158,9 @@ public class GoogleAnalyticsProvider implements AnalyticsProvider {
     public void addSuperProperties(HashMap<String, ?> hashMap) {
 
     }
+
+    @Override
+    public void removeAllSuperProperties() {
+
+    }
 }

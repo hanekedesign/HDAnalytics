@@ -118,4 +118,23 @@ public class Analytics {
             entry.getValue().updateUserProfile(key, value);
         }
     }
+
+    /**
+     * Add/update super proerties that are sent with every event
+     * @param hashMap
+     */
+    public static void addSuperProperties(HashMap<String, ?> hashMap) {
+        for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
+            entry.getValue().addSuperProperties(hashMap);
+        }
+    }
+
+    /**
+     * Remove all superproperties for a given user
+     */
+    public static void removeAllSuperProperties() {
+        for(Map.Entry<String, AnalyticsProvider> entry : analyticsProviders.entrySet()) {
+            entry.getValue().removeAllSuperProperties();
+        }
+    }
 }

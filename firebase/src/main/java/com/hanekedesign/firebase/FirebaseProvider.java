@@ -19,8 +19,8 @@ public class FirebaseProvider implements AnalyticsProvider {
     private String screenNameTitle;
     private String sessionTitle;
     private String sessionEvent = "new_session";
-
     private String userId;
+    private HashMap superProperties = new HashMap();
 
     private FirebaseAnalytics firebaseAnalytics;
 
@@ -77,6 +77,8 @@ public class FirebaseProvider implements AnalyticsProvider {
                 else {}
             }
         }
+        if(!superProperties.isEmpty())
+            addSuperPropertyToEvent(params, superProperties);
         firebaseAnalytics.logEvent(eventNameTitle, params);
     }
 
@@ -84,6 +86,8 @@ public class FirebaseProvider implements AnalyticsProvider {
     public void sendScreenViewEvent(String screenName) {
         Bundle params = new Bundle();
         params.putString(screenNameTitle, screenName);
+        if(!superProperties.isEmpty())
+            addSuperPropertyToEvent(params, superProperties);
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
     }
 
@@ -91,6 +95,8 @@ public class FirebaseProvider implements AnalyticsProvider {
     public void sendSessionEvent() {
         Bundle params = new Bundle();
         params.putString(sessionTitle, sessionEvent);
+        if(!superProperties.isEmpty())
+            addSuperPropertyToEvent(params, superProperties);
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
     }
 
@@ -111,16 +117,46 @@ public class FirebaseProvider implements AnalyticsProvider {
 
     @Override
     public void addSuperProperties(HashMap<String, ?> hashMap) {
-
+        for(Map.Entry<String, ?> entry : hashMap.entrySet()) {
+            superProperties.put(entry.getKey(), entry.getValue());
+        }
     }
 
     @Override
     public void removeSuperProperty(String propertyName) {
-
+        if(superProperties.containsKey(propertyName))
+            superProperties.remove(propertyName);
     }
 
     @Override
     public void removeAllSuperProperties() {
+        superProperties.clear();
+    }
 
+    private void addSuperPropertyToEvent(Bundle params, HashMap<String, ?> hashMap) {
+        for(Map.Entry<String, ?> entry : hashMap.entrySet()) {
+            if(entry.getValue() instanceof String) {
+                params.putString(entry.getKey(), ((String) entry.getValue()));
+            }
+            else if(entry.getValue() instanceof Integer) {
+                params.putInt(entry.getKey(), ((Integer) entry.getValue()));
+            }
+            else if(entry.getValue() instanceof Boolean) {
+                params.putBoolean(entry.getKey(), ((Boolean) entry.getValue()));
+            }
+            else if(entry.getValue() instanceof Float) {
+                params.putFloat(entry.getKey(), ((Float) entry.getValue()));
+            }
+            else if(entry.getValue() instanceof Double) {
+                params.putDouble(entry.getKey(), ((Double) entry.getValue()));
+            }
+            else if(entry.getValue() instanceof Character) {
+                params.putChar(entry.getKey(), ((Character) entry.getValue()));
+            }
+            else if(entry.getValue() instanceof CharSequence) {
+                params.putCharSequence(entry.getKey(), ((CharSequence) entry.getValue()));
+            }
+            else {}
+        }
     }
 }
